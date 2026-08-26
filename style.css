@@ -2,7 +2,7 @@
 
 .contacto {
     padding: 80px 10%;
-    background-color: #f5f5f5;
+    background-color: #130101;
 }
 
 .contacto-contenedor {
@@ -44,7 +44,7 @@
 .formulario {
     flex: 1;
     min-width: 300px;
-    background-color: white;
+    background-color: rgb(71, 161, 79);
     padding: 30px;
     border-radius: 10px;
 }
