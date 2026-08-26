@@ -3,36 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Supermercado Online - Compra productos frescos, ofertas semanales y abrí tu cuenta de cliente con envíos a domicilio.">
-    <meta name="keywords" content="supermercado, ofertas, compras online, alimentos, registro de usuario">
-    <meta name="author" content="Grupo de Trabajo">
-    
-    <!-- Open Graph para redes sociales y optimización SEO -->
-    <meta property="og:title" content="Supermercado Online - Las mejores ofertas al mejor precio">
-    <meta property="og:description" content="Hacé tus compras online de forma rápida y segura.">
-    <meta property="og:type" content="website">
-
-    <title>Supermercado Online | Inicio</title>
+    <title>Mi Proyecto Web Completo</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <!-- Encabezado Principal y Navegación -->
-    <header>
-        <h1>Supermercado Central</h1>
-        <p>Tu compra diaria al mejor precio</p>
-        
-        <nav aria-label="Navegación principal">
-            <ul>
-                <li><a href="#inicio">Inicio</a></li>
-                <li><a href="#productos">Productos</a></li>
-                <li><a href="#ofertas">Ofertas</a></li>
-                <li><a href="#registro">Crear Cuenta</a></li>
-                <li><a href="#contacto">Contacto</a></li>
-            </ul>
+    <!-- INTEGRANTE B: Header & Nav (Flexbox) -->
+    <header class="header">
+        <div class="logo">MiMarca</div>
+        <nav class="nav">
+            <a href="#inicio">Inicio</a>
+            <a href="#servicios">Servicios</a>
+            <a href="#galeria">Galería</a>
+            <a href="#contacto">Contacto</a>
         </nav>
     </header>
 
-    <!-- Contenido Principal -->
     <main>
         <!-- Sección de Catálogo / Productos -->
 <!-- Catálogo de Productos -->
@@ -114,6 +100,40 @@
     <footer id="contacto">
         <p>&copy; 2026 Supermercado Central - Todos los derechos reservados.</p>
         <p>Atención al cliente: 0800-123-4567 | info@supermercado.com</p>
+        <!-- INTEGRANTE B: Sección de Cards (Flexbox) -->
+        <section id="servicios" class="flex-section container">
+            <h2>Nuestros Servicios</h2>
+            <div class="flex-container">
+                <article class="card">
+                    <h3>Servicio 1</h3>
+                    <p>Descripción breve del servicio brindado.</p>
+                </article>
+                <article class="card">
+                    <h3>Servicio 2</h3>
+                    <p>Descripción breve del servicio brindado.</p>
+                </article>
+                <article class="card">
+                    <h3>Servicio 3</h3>
+                    <p>Descripción breve del servicio brindado.</p>
+                </article>
+            </div>
+        </section>
+
+        <!-- INTEGRANTE C: Sección de Galería (CSS Grid) -->
+        <section id="galeria" class="grid-section container">
+            <h2>Galería de Trabajos</h2>
+            <div class="grid-container">
+                <article class="grid-item">Item 1</article>
+                <article class="grid-item">Item 2</article>
+                <article class="grid-item">Item 3</article>
+                <article class="grid-item">Item 4</article>
+            </div>
+        </section>
+    </main>
+
+    <!-- INTEGRANTE C: Footer -->
+    <footer class="footer">
+        <p>&copy; 2026 - Todos los derechos reservados.</p>
     </footer>
 
 </body>
