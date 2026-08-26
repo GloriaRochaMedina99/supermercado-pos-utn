@@ -5,7 +5,7 @@ Proyecto desarrollado para la cátedra de Programación en la UTN. Consiste en u
 ## Integrantes del Grupo
 - Gloria Rocha Medina (Administradora / Reviewer de PRs)
 - Lucia Rodriguez
-- Carina ...
+- Condori Karina
 
 ## Metodología y Flujo de Trabajo (Git / GitHub)
 - **`main`**: Rama de producción estable.

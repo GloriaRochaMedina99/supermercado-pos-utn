@@ -1,0 +1,95 @@
+/* SECCIÓN CONTACTO */
+
+.contacto {
+    padding: 80px 10%;
+    background-color: #f5f5f5;
+}
+
+.contacto-contenedor {
+    display: flex;
+    justify-content: space-between;
+    gap: 50px;
+    flex-wrap: wrap;
+}
+
+/* INFORMACIÓN */
+
+.contacto-info {
+    flex: 1;
+    min-width: 300px;
+}
+
+.contacto-info h2 {
+    font-size: 32px;
+    margin-bottom: 15px;
+}
+
+.contacto-info h3 {
+    margin-top: 30px;
+    margin-bottom: 15px;
+}
+
+.contacto-info p {
+    margin-bottom: 10px;
+    color: #555;
+}
+
+.datos-contacto {
+    margin-top: 20px;
+}
+
+
+/* FORMULARIO */
+
+.formulario {
+    flex: 1;
+    min-width: 300px;
+    background-color: white;
+    padding: 30px;
+    border-radius: 10px;
+}
+
+.formulario h2 {
+    margin-bottom: 20px;
+}
+
+.formulario form {
+    display: flex;
+    flex-direction: column;
+}
+
+.formulario input,
+.formulario textarea {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 15px;
+
+    border: 1px solid #ccc;
+    border-radius: 5px;
+
+    font-size: 16px;
+}
+
+.formulario textarea {
+    height: 120px;
+    resize: none;
+}
+
+.formulario button {
+    padding: 12px;
+
+    border: none;
+    border-radius: 5px;
+
+    background-color: #111;
+    color: white;
+
+    font-size: 16px;
+    cursor: pointer;
+
+    transition: 0.3s;
+}
+
+.formulario button:hover {
+    background-color: #555;
+}
