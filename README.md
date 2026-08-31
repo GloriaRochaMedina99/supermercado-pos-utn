@@ -34,4 +34,16 @@ En el selector `:root` se crearon variables para:
 Se implementó mediante:
 1. Layouts adaptativos nativos con `auto-fit` y `minmax()` en Grid, y `flex-wrap` en Flexbox.
 2. Unidades relativas como `%`, `rem`, `vh`, `vw` y `fr`.
-3. **Media Queries (`@media (max-width: 768px)`)** para reordenar la barra de navegación y ajustar espaciados en pantallas de dispositivos móviles y tablets.
+3. **Media Queries  (`@media (max-width: 768px)`)** para reordenar la barra de navegación y ajustar espaciados en pantallas de dispositivos móviles y tablets.
+
+ ### Estrategias SEO
+Se incorporaron etiquetas META para mejorar la información que los motores de búsqueda pueden obtener del sitio.
+Las estrategias utilizadas fueron:
+
+- **Meta description:** describe brevemente el contenido de la página.
+- **Meta keywords:** contiene palabras relacionadas con el supermercado, sus productos y ofertas.
+- **Meta author:** identifica al autor o grupo responsable del sitio.
+- **Meta robots:** indica a los motores de búsqueda que pueden indexar la página y seguir sus enlaces.
+- **Meta viewport:** permite que el sitio se adapte correctamente a diferentes tamaños de pantalla.
+
+Estas etiquetas se incorporaron dentro de la sección `<head>` del archivo `index.html`.
