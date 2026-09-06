@@ -3,7 +3,7 @@
 ## Integrantes
 - Integrante 1 ROCHA MEDINA GLORIA
 - Integrante 2 RODRIGUEZ LUCIA
-- Integrante 3 CARINA
+- Integrante 3 
 
 ## Descripción Breve
 Transformación de una estructura HTML base en una interfaz web moderna, responsive y funcional mediante el uso de variables CSS, Flexbox, CSS Grid y buenas prácticas de maquetación semántica.
