@@ -42,17 +42,15 @@ body {
   line-height: 1.6;
 }
 
-
-/* ==========================================
-   4. IDs
-   ========================================== */
-
-
-/* No hay selectores con ID en este CSS */
+.container {
+  padding: var(--spacing-lg);
+  max-width: 1200px;
+  margin: 0 auto;
+}
 
 
 /* ==========================================
-   5. CLASES
+   4. CLASES Y ESTRUCTURA
    ========================================== */
 
 .header {
@@ -62,12 +60,6 @@ body {
   background-color: var(--color-primary);
   padding: var(--spacing-md) var(--spacing-lg);
   color: var(--color-white);
-}
-
-.container {
-  padding: var(--spacing-lg);
-  max-width: 1200px;
-  margin: 0 auto;
 }
 
 .nav {
@@ -81,21 +73,27 @@ body {
   font-weight: bold;
 }
 
+.nav a:hover {
+  text-decoration: underline;
+}
+
+/* 
 .flex-container {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--spacing-md);
-  margin-top: var(--spacing-md);
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-md);
+    margin-top: var(--spacing-md);
 }
 
 .card {
-  flex: 1 1 250px; /* Crece, se encoge y base de 250px */
-  background: var(--color-white);
-  padding: var(--spacing-md);
-  border-radius: var(--border-radius);
-  box-shadow: var(--box-shadow);
-  border: 1px solid #e0e0e0;
-}
+    flex: 1 1 250px;
+    background: var(--color-white);
+    padding: var(--spacing-md);
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+    border: 1px solid #e0e0e0;
+} 
+*/
 
 .grid-container {
   display: grid;
@@ -111,7 +109,6 @@ body {
   text-align: center;
   border-radius: var(--border-radius);
   height: 150px;
-
   display: flex;
   align-items: center;
   justify-content: center;
@@ -127,21 +124,10 @@ body {
 
 
 /* ==========================================
-   6. ELEMENTOS HTML
-   ========================================== */
-
-
-.nav a:hover {
-  text-decoration: underline;
-}
-
-
-/* ==========================================
-   7. MEDIA QUERIES
+   5. MEDIA QUERIES (RESPONSIVE)
    ========================================== */
 
 @media (max-width: 768px) {
-
   .header {
     flex-direction: column;
     gap: var(--spacing-md);
