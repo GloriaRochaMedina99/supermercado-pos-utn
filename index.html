@@ -1,191 +1,1255 @@
 <!DOCTYPE html>
-<html lang="es">
-<head>
 
+<html lang="es">
+
+<head>
     <meta charset="UTF-8">
 
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<<<<<<< HEAD
-    <title>Mi Proyecto Web Completo</title>
-    <!-- Bootstrap 5 CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-=======
+```
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <meta name="description" content="Supermercado online con productos, ofertas y promociones.">
+<!-- SEO anterior: CONSERVADO -->
+<meta name="description" content="Supermercado online con productos, ofertas y promociones.">
+<meta name="keywords" content="supermercado, productos, ofertas, promociones, compras">
+<meta name="author" content="Grupo de Trabajo">
+<meta name="robots" content="index, follow">
 
-    <meta name="keywords" content="supermercado, productos, ofertas, promociones, compras">
+<title>Supermercado Central</title>
 
-    <meta name="author" content="Grupo de Trabajo">
-    
-    <meta name="robots" content="index, follow">
+<!-- =====================================================
+     BOOTSTRAP 5
+     ===================================================== -->
+<link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+    rel="stylesheet">
 
-    <title>Supermercado Online</title>
+<!-- =====================================================
+     CSS ANTERIOR
+     NO SE BORRA
+     Se mantiene conectado para conservar los estilos
+     realizados anteriormente.
+     ===================================================== -->
+<link rel="stylesheet" href="style.css">
+```
 
->>>>>>> 7e68e8adc1adbf8435ce91b8cfbaca7361846cc9
-    <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
-    <!-- INTEGRANTE B: Header & Nav (Flexbox) -->
-    <header class="header">
-        <div class="logo">MiMarca</div>
-        <nav class="nav">
-            <a href="#inicio">Inicio</a>
-            <a href="#servicios">Servicios</a>
-            <a href="#galeria">Galería</a>
-            <a href="#contacto">Contacto</a>
-        </nav>
-    </header>
+```
+<!-- =====================================================
+     HEADER / NAVBAR
+     Bootstrap Navbar + CSS anterior
+     ===================================================== -->
 
-    <main>
-<<<<<<< HEAD
-        <!-- INTEGRANTE B: Sección de Cards Refactorizada con Bootstrap -->
-        <section id="servicios" class="container py-5">
-            <h2 class="text-center mb-4">Nuestros Servicios</h2>
-            <div class="row row-cols-1 row-cols-md-3 g-4">
-                <div class="col">
-                    <div class="card h-100 shadow-sm">
-                        <div class="card-body text-center">
-                            <h3 class="card-title h5">Servicio 1</h3>
-                            <p class="card-text">Descripción breve del servicio brindado.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="card h-100 shadow-sm">
-                        <div class="card-body text-center">
-                            <h3 class="card-title h5">Servicio 2</h3>
-                            <p class="card-text">Descripción breve del servicio brindado.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="card h-100 shadow-sm">
-                        <div class="card-body text-center">
-                            <h3 class="card-title h5">Servicio 3</h3>
-                            <p class="card-text">Descripción breve del servicio brindado.</p>
-                        </div>
-                    </div>
-                </div>
-=======
-        <!-- Sección de Catálogo / Productos -->
-<!-- Catálogo de Productos -->
-<section id="productos">
-    <h2>Catálogo de Productos</h2>
-    <p>Encontrá nuestros productos destacados y las mejores opciones para tu compra.</p>
+<header class="header">
 
-    <article>
-        <h3>Almacén</h3>
-        <p>Arroz, fideos, aceites, conservas y productos de primeras marcas.</p>
-        <p><strong>Desde $1.500</strong></p>
-        <button type="button">Ver productos</button>
-    </article>
+    <nav class="navbar navbar-expand-lg bg-white border-bottom shadow-sm">
 
-    <article>
-        <h3>Frescos y Lácteos</h3>
-        <p>Leche, quesos, yogures y otros productos refrigerados.</p>
-        <p><strong>Desde $1.200</strong></p>
-        <button type="button">Ver productos</button>
-    </article>
+        <div class="container">
 
-    <article>
-        <h3>Frutas y Verduras</h3>
-        <p>Frutas y verduras frescas seleccionadas para todos los días.</p>
-        <p><strong>Desde $800</strong></p>
-        <button type="button">Ver productos</button>
-    </article>
+            <!-- LOGO -->
+            <a class="navbar-brand fw-bold fs-4" href="#inicio">
+                🛒 Supermercado Micuman
+            </a>
 
-    <article>
-        <h3>Bebidas</h3>
-        <p>Gaseosas, aguas, jugos y bebidas para toda la familia.</p>
-        <p><strong>Desde $1.000</strong></p>
-        <button type="button">Ver productos</button>
-    </article>
-</section>
-        <!-- Sección de Registro de Usuario -->
-        <section id="registro">
-            <h2>Registro de Cliente</h2>
-            <form action="#" method="POST">
-                <fieldset>
-                    <legend>Datos Personales</legend>
-                    
-                    <label for="nombre">Nombre completo:</label>
-                    <input type="text" id="nombre" name="nombre" placeholder="Ej: Maria Perez" required>
+            <!-- BOTÓN MOBILE -->
+            <button
+                class="navbar-toggler"
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#menuPrincipal"
+                aria-controls="menuPrincipal"
+                aria-expanded="false"
+                aria-label="Abrir menú">
 
-                    <label for="email">Correo electrónico:</label>
-                    <input type="email" id="email" name="email" placeholder="correo@ejemplo.com" required>
+                <span class="navbar-toggler-icon"></span>
 
-                    <label for="password">Contraseña:</label>
-                    <input type="password" id="password" name="password" required>
+            </button>
 
-                    <button type="submit">Crear mi Cuenta</button>
-                </fieldset>
-            </form>
-        </section>
-    </main>
+            <!-- MENÚ -->
+            <div class="collapse navbar-collapse" id="menuPrincipal">
 
-    <!-- Barra Lateral (Promociones / Avisos) -->
-<aside id="ofertas">
-    <h2>Ofertas de la Semana</h2>
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
 
-    <article>
-        <h3>20% de descuento</h3>
-        <p>En frutas y verduras pagando con tarjeta de débito todos los martes.</p>
-    </article>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#inicio">
+                            Inicio
+                        </a>
+                    </li>
 
-    <article>
-        <h3>Envío Gratis</h3>
-        <p>En compras superiores a $15.000 dentro de la zona urbana.</p>
-    </article>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#categorias">
+                            Categorías
+                        </a>
+                    </li>
 
-    <article>
-        <h3>2x1 en Bebidas</h3>
-        <p>Todos los viernes en productos seleccionados de la sección bebidas.</p>
-    </article>
-</aside>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#productos">
+                            Productos
+                        </a>
+                    </li>
 
-    <!-- Pie de Página -->
-    <footer id="contacto">
-        <p>&copy; 2026 Supermercado Central - Todos los derechos reservados.</p>
-        <p>Atención al cliente: 0800-123-4567 | info@supermercado.com</p>
-        <!-- INTEGRANTE B: Sección de Cards (Flexbox) -->
-        <section id="servicios" class="flex-section container">
-            <h2>Nuestros Servicios</h2>
-            <div class="flex-container">
-                <article class="card">
-                    <h3>Servicio 1</h3>
-                    <p>Descripción breve del servicio brindado.</p>
-                </article>
-                <article class="card">
-                    <h3>Servicio 2</h3>
-                    <p>Descripción breve del servicio brindado.</p>
-                </article>
-                <article class="card">
-                    <h3>Servicio 3</h3>
-                    <p>Descripción breve del servicio brindado.</p>
-                </article>
->>>>>>> 7e68e8adc1adbf8435ce91b8cfbaca7361846cc9
+                    <li class="nav-item">
+                        <a class="nav-link" href="#ofertas">
+                            Ofertas
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="#registro">
+                            Registrarse
+                        </a>
+                    </li>
+
+                </ul>
+
+                <!-- CARRITO -->
+                <button
+                    class="btn btn-outline-primary ms-lg-3"
+                    type="button">
+
+                    🛒 Carrito
+                    <span class="badge bg-primary">0</span>
+
+                </button>
+
             </div>
-        </section>
 
-        <!-- INTEGRANTE C: Sección de Galería (CSS Grid) -->
-        <section id="galeria" class="grid-section container">
-            <h2>Galería de Trabajos</h2>
-            <div class="grid-container">
-                <article class="grid-item">Item 1</article>
-                <article class="grid-item">Item 2</article>
-                <article class="grid-item">Item 3</article>
-                <article class="grid-item">Item 4</article>
+        </div>
+
+    </nav>
+
+</header>
+
+
+<main>
+
+    <!-- =====================================================
+         INICIO / HERO
+         ===================================================== -->
+
+    <section id="inicio" class="py-5 bg-light">
+
+        <div class="container">
+
+            <div class="row align-items-center g-5">
+
+                <!-- TEXTO -->
+                <div class="col-lg-6">
+
+                    <span class="badge bg-success mb-3">
+                        COMPRA ONLINE
+                    </span>
+
+                    <h1 class="display-4 fw-bold">
+                        Todo lo que necesitás,
+                        en un solo lugar
+                    </h1>
+
+                    <p class="lead text-muted">
+                        Encontrá alimentos, bebidas, productos de
+                        limpieza y mucho más al mejor precio.
+                    </p>
+
+                    <div class="d-flex gap-2 flex-wrap">
+
+                        <a
+                            href="#productos"
+                            class="btn btn-primary btn-lg">
+
+                            Ver productos
+
+                        </a>
+
+                        <a
+                            href="#ofertas"
+                            class="btn btn-outline-danger btn-lg">
+
+                            🔥 Ver ofertas
+
+                        </a>
+
+                    </div>
+
+                </div>
+
+
+                <!-- IMAGEN / ILUSTRACIÓN -->
+                <div class="col-lg-6 text-center">
+
+                    <div class="p-5 bg-white rounded-4 shadow-sm">
+
+                        <div class="display-1">
+                            🛒
+                        </div>
+
+                        <h2 class="h3 mt-3">
+                            Comprá fácil y rápido
+                        </h2>
+
+                        <p class="text-muted mb-0">
+                            Elegí tus productos y realizá tu pedido
+                            desde cualquier lugar.
+                        </p>
+
+                    </div>
+
+                </div>
+
             </div>
-        </section>
-    </main>
 
-    <!-- INTEGRANTE C: Footer -->
-    <footer class="footer">
-        <p>&copy; 2026 - Todos los derechos reservados.</p>
-    </footer>
+        </div>
 
-    <!-- Bootstrap 5 JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    </section>
+
+
+    <!-- =====================================================
+         BUSCADOR
+         ===================================================== -->
+
+    <section class="container py-4">
+
+        <div class="card shadow-sm border-0">
+
+            <div class="card-body">
+
+                <form class="row g-2">
+
+                    <div class="col-md-10">
+
+                        <label
+                            for="busqueda"
+                            class="visually-hidden">
+
+                            Buscar productos
+
+                        </label>
+
+                        <input
+                            type="search"
+                            id="busqueda"
+                            class="form-control form-control-lg"
+                            placeholder="¿Qué estás buscando?">
+
+                    </div>
+
+                    <div class="col-md-2 d-grid">
+
+                        <button
+                            type="submit"
+                            class="btn btn-primary btn-lg">
+
+                            🔍 Buscar
+
+                        </button>
+
+                    </div>
+
+                </form>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         CATEGORÍAS
+         Bootstrap GRID + CARDS
+         ===================================================== -->
+
+    <section id="categorias" class="container py-5">
+
+        <div class="text-center mb-5">
+
+            <h2 class="fw-bold">
+                Categorías
+            </h2>
+
+            <p class="text-muted">
+                Encontrá rápidamente lo que necesitás.
+            </p>
+
+        </div>
+
+
+        <div class="row row-cols-2 row-cols-md-4 g-4">
+
+            <!-- CATEGORÍA 1 -->
+            <div class="col">
+
+                <article class="card h-100 text-center shadow-sm">
+
+                    <div class="card-body p-4">
+
+                        <div class="display-4 mb-3">
+                            🥫
+                        </div>
+
+                        <h3 class="h5">
+                            Almacén
+                        </h3>
+
+                        <p class="text-muted small">
+                            Arroz, fideos, aceites y conservas.
+                        </p>
+
+                        <a
+                            href="#productos"
+                            class="btn btn-outline-primary btn-sm">
+
+                            Ver productos
+
+                        </a>
+
+                    </div>
+
+                </article>
+
+            </div>
+
+
+            <!-- CATEGORÍA 2 -->
+            <div class="col">
+
+                <article class="card h-100 text-center shadow-sm">
+
+                    <div class="card-body p-4">
+
+                        <div class="display-4 mb-3">
+                            🥛
+                        </div>
+
+                        <h3 class="h5">
+                            Lácteos
+                        </h3>
+
+                        <p class="text-muted small">
+                            Leche, yogures, quesos y más.
+                        </p>
+
+                        <a
+                            href="#productos"
+                            class="btn btn-outline-primary btn-sm">
+
+                            Ver productos
+
+                        </a>
+
+                    </div>
+
+                </article>
+
+            </div>
+
+
+            <!-- CATEGORÍA 3 -->
+            <div class="col">
+
+                <article class="card h-100 text-center shadow-sm">
+
+                    <div class="card-body p-4">
+
+                        <div class="display-4 mb-3">
+                            🍎
+                        </div>
+
+                        <h3 class="h5">
+                            Frutas y Verduras
+                        </h3>
+
+                        <p class="text-muted small">
+                            Productos frescos todos los días.
+                        </p>
+
+                        <a
+                            href="#productos"
+                            class="btn btn-outline-primary btn-sm">
+
+                            Ver productos
+
+                        </a>
+
+                    </div>
+
+                </article>
+
+            </div>
+
+
+            <!-- CATEGORÍA 4 -->
+            <div class="col">
+
+                <article class="card h-100 text-center shadow-sm">
+
+                    <div class="card-body p-4">
+
+                        <div class="display-4 mb-3">
+                            🥤
+                        </div>
+
+                        <h3 class="h5">
+                            Bebidas
+                        </h3>
+
+                        <p class="text-muted small">
+                            Gaseosas, aguas y jugos.
+                        </p>
+
+                        <a
+                            href="#productos"
+                            class="btn btn-outline-primary btn-sm">
+
+                            Ver productos
+
+                        </a>
+
+                    </div>
+
+                </article>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         ALERTA / BENEFICIO
+         ===================================================== -->
+
+    <section class="container">
+
+        <div
+            class="alert alert-success d-flex align-items-center"
+            role="alert">
+
+            <div class="fs-3 me-3">
+                🚚
+            </div>
+
+            <div>
+                <strong>Envío gratis</strong>
+                en compras superiores a $15.000.
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         PRODUCTOS
+         Bootstrap Cards + Grid
+         ===================================================== -->
+
+    <section id="productos" class="container py-5">
+
+        <div class="d-flex justify-content-between align-items-center mb-4">
+
+            <div>
+
+                <h2 class="fw-bold mb-1">
+                    Productos destacados
+                </h2>
+
+                <p class="text-muted mb-0">
+                    Los productos más elegidos.
+                </p>
+
+            </div>
+
+            <button class="btn btn-outline-primary">
+                Ver todos
+            </button>
+
+        </div>
+
+
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-4 g-4">
+
+
+            <!-- PRODUCTO 1 -->
+            <div class="col">
+
+                <article class="card h-100 shadow-sm">
+
+                    <div class="position-relative">
+
+                        <div
+                            class="bg-light text-center py-5 display-3">
+
+                            🍚
+
+                        </div>
+
+                        <span
+                            class="badge bg-danger position-absolute top-0 start-0 m-2">
+
+                            OFERTA
+
+                        </span>
+
+                    </div>
+
+
+                    <div class="card-body d-flex flex-column">
+
+                        <p class="text-muted small mb-1">
+                            Almacén
+                        </p>
+
+                        <h3 class="h5">
+                            Arroz Largo Fino 1 kg
+                        </h3>
+
+                        <p class="text-decoration-line-through text-muted mb-0">
+                            $2.000
+                        </p>
+
+                        <p class="fs-4 fw-bold mb-3">
+                            $1.500
+                        </p>
+
+                        <button
+                            class="btn btn-success mt-auto">
+
+                            🛒 Agregar al carrito
+
+                        </button>
+
+                    </div>
+
+                </article>
+
+            </div>
+
+
+            <!-- PRODUCTO 2 -->
+            <div class="col">
+
+                <article class="card h-100 shadow-sm">
+
+                    <div class="position-relative">
+
+                        <div
+                            class="bg-light text-center py-5 display-3">
+
+                            🥛
+
+                        </div>
+
+                        <span
+                            class="badge bg-danger position-absolute top-0 start-0 m-2">
+
+                            -15%
+
+                        </span>
+
+                    </div>
+
+
+                    <div class="card-body d-flex flex-column">
+
+                        <p class="text-muted small mb-1">
+                            Lácteos
+                        </p>
+
+                        <h3 class="h5">
+                            Leche Entera 1 L
+                        </h3>
+
+                        <p class="text-decoration-line-through text-muted mb-0">
+                            $1.400
+                        </p>
+
+                        <p class="fs-4 fw-bold mb-3">
+                            $1.190
+                        </p>
+
+                        <button
+                            class="btn btn-success mt-auto">
+
+                            🛒 Agregar al carrito
+
+                        </button>
+
+                    </div>
+
+                </article>
+
+            </div>
+
+
+            <!-- PRODUCTO 3 -->
+            <div class="col">
+
+                <article class="card h-100 shadow-sm">
+
+                    <div class="position-relative">
+
+                        <div
+                            class="bg-light text-center py-5 display-3">
+
+                            🥤
+
+                        </div>
+
+                        <span
+                            class="badge bg-danger position-absolute top-0 start-0 m-2">
+
+                            2x1
+
+                        </span>
+
+                    </div>
+
+
+                    <div class="card-body d-flex flex-column">
+
+                        <p class="text-muted small mb-1">
+                            Bebidas
+                        </p>
+
+                        <h3 class="h5">
+                            Gaseosa 2.25 L
+                        </h3>
+
+                        <p class="text-decoration-line-through text-muted mb-0">
+                            $2.500
+                        </p>
+
+                        <p class="fs-4 fw-bold mb-3">
+                            $2.000
+                        </p>
+
+                        <button
+                            class="btn btn-success mt-auto">
+
+                            🛒 Agregar al carrito
+
+                        </button>
+
+                    </div>
+
+                </article>
+
+            </div>
+
+
+            <!-- PRODUCTO 4 -->
+            <div class="col">
+
+                <article class="card h-100 shadow-sm">
+
+                    <div class="position-relative">
+
+                        <div
+                            class="bg-light text-center py-5 display-3">
+
+                            🍎
+
+                        </div>
+
+                        <span
+                            class="badge bg-success position-absolute top-0 start-0 m-2">
+
+                            FRESCO
+
+                        </span>
+
+                    </div>
+
+
+                    <div class="card-body d-flex flex-column">
+
+                        <p class="text-muted small mb-1">
+                            Frutas
+                        </p>
+
+                        <h3 class="h5">
+                            Manzana Roja 1 kg
+                        </h3>
+
+                        <p class="text-muted mb-0">
+                            Precio por kilogramo
+                        </p>
+
+                        <p class="fs-4 fw-bold mb-3">
+                            $1.800
+                        </p>
+
+                        <button
+                            class="btn btn-success mt-auto">
+
+                            🛒 Agregar al carrito
+
+                        </button>
+
+                    </div>
+
+                </article>
+
+            </div>
+
+
+        </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         OFERTAS
+         ===================================================== -->
+
+    <section id="ofertas" class="bg-light py-5">
+
+        <div class="container">
+
+            <div class="text-center mb-5">
+
+                <h2 class="fw-bold">
+                    🔥 Ofertas de la semana
+                </h2>
+
+                <p class="text-muted">
+                    Aprovechá nuestras promociones.
+                </p>
+
+            </div>
+
+
+            <div class="row g-4">
+
+
+                <!-- OFERTA 1 -->
+                <div class="col-md-4">
+
+                    <article class="card h-100 border-0 shadow-sm">
+
+                        <div class="card-body text-center p-4">
+
+                            <span class="badge bg-danger mb-3">
+                                20% OFF
+                            </span>
+
+                            <h3 class="h4">
+                                Frutas y Verduras
+                            </h3>
+
+                            <p>
+                                Todos los martes pagando con
+                                tarjeta de débito.
+                            </p>
+
+                            <a
+                                href="#productos"
+                                class="btn btn-danger">
+
+                                Aprovechar oferta
+
+                            </a>
+
+                        </div>
+
+                    </article>
+
+                </div>
+
+
+                <!-- OFERTA 2 -->
+                <div class="col-md-4">
+
+                    <article class="card h-100 border-0 shadow-sm">
+
+                        <div class="card-body text-center p-4">
+
+                            <span class="badge bg-success mb-3">
+                                GRATIS
+                            </span>
+
+                            <h3 class="h4">
+                                Envío a domicilio
+                            </h3>
+
+                            <p>
+                                En compras superiores a $15.000
+                                dentro de la zona urbana.
+                            </p>
+
+                            <a
+                                href="#productos"
+                                class="btn btn-success">
+
+                                Comprar ahora
+
+                            </a>
+
+                        </div>
+
+                    </article>
+
+                </div>
+
+
+                <!-- OFERTA 3 -->
+                <div class="col-md-4">
+
+                    <article class="card h-100 border-0 shadow-sm">
+
+                        <div class="card-body text-center p-4">
+
+                            <span class="badge bg-warning text-dark mb-3">
+                                2x1
+                            </span>
+
+                            <h3 class="h4">
+                                Bebidas seleccionadas
+                            </h3>
+
+                            <p>
+                                Todos los viernes en productos
+                                seleccionados.
+                            </p>
+
+                            <a
+                                href="#productos"
+                                class="btn btn-warning">
+
+                                Ver productos
+
+                            </a>
+
+                        </div>
+
+                    </article>
+
+                </div>
+
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         SERVICIOS
+         ===================================================== -->
+
+    <section id="servicios" class="container py-5">
+
+        <div class="text-center mb-5">
+
+            <h2 class="fw-bold">
+                Nuestros servicios
+            </h2>
+
+            <p class="text-muted">
+                Todo pensado para facilitar tu compra.
+            </p>
+
+        </div>
+
+
+        <div class="row row-cols-1 row-cols-md-3 g-4">
+
+
+            <div class="col">
+
+                <article class="card h-100 text-center border-0 shadow-sm">
+
+                    <div class="card-body p-4">
+
+                        <div class="display-5 mb-3">
+                            🛒
+                        </div>
+
+                        <h3 class="h5">
+                            Compra online
+                        </h3>
+
+                        <p class="text-muted">
+                            Realizá tus compras desde cualquier
+                            lugar y en cualquier momento.
+                        </p>
+
+                    </div>
+
+                </article>
+
+            </div>
+
+
+            <div class="col">
+
+                <article class="card h-100 text-center border-0 shadow-sm">
+
+                    <div class="card-body p-4">
+
+                        <div class="display-5 mb-3">
+                            🚚
+                        </div>
+
+                        <h3 class="h5">
+                            Envíos a domicilio
+                        </h3>
+
+                        <p class="text-muted">
+                            Recibí tus productos directamente
+                            en tu domicilio.
+                        </p>
+
+                    </div>
+
+                </article>
+
+            </div>
+
+
+            <div class="col">
+
+                <article class="card h-100 text-center border-0 shadow-sm">
+
+                    <div class="card-body p-4">
+
+                        <div class="display-5 mb-3">
+                            💳
+                        </div>
+
+                        <h3 class="h5">
+                            Medios de pago
+                        </h3>
+
+                        <p class="text-muted">
+                            Pagá de manera rápida y segura.
+                        </p>
+
+                    </div>
+
+                </article>
+
+            </div>
+
+
+        </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         REGISTRO
+         Bootstrap FORM
+         ===================================================== -->
+
+    <section id="registro" class="bg-light py-5">
+
+        <div class="container">
+
+            <div class="row justify-content-center">
+
+                <div class="col-lg-7">
+
+                    <div class="card shadow-sm border-0">
+
+                        <div class="card-body p-4 p-md-5">
+
+                            <div class="text-center mb-4">
+
+                                <h2 class="fw-bold">
+                                    Crear una cuenta
+                                </h2>
+
+                                <p class="text-muted">
+                                    Registrate para realizar tus compras.
+                                </p>
+
+                            </div>
+
+
+                            <form action="#" method="POST">
+
+                                <div class="row g-3">
+
+
+                                    <!-- NOMBRE -->
+                                    <div class="col-md-6">
+
+                                        <label
+                                            for="nombre"
+                                            class="form-label">
+
+                                            Nombre
+
+                                        </label>
+
+                                        <input
+                                            type="text"
+                                            id="nombre"
+                                            name="nombre"
+                                            class="form-control"
+                                            placeholder="Ej: Juan"
+                                            required>
+
+                                    </div>
+
+
+                                    <!-- APELLIDO -->
+                                    <div class="col-md-6">
+
+                                        <label
+                                            for="apellido"
+                                            class="form-label">
+
+                                            Apellido
+
+                                        </label>
+
+                                        <input
+                                            type="text"
+                                            id="apellido"
+                                            name="apellido"
+                                            class="form-control"
+                                            placeholder="Ej: Pérez"
+                                            required>
+
+                                    </div>
+
+
+                                    <!-- EMAIL -->
+                                    <div class="col-12">
+
+                                        <label
+                                            for="email"
+                                            class="form-label">
+
+                                            Correo electrónico
+
+                                        </label>
+
+                                        <input
+                                            type="email"
+                                            id="email"
+                                            name="email"
+                                            class="form-control"
+                                            placeholder="correo@ejemplo.com"
+                                            required>
+
+                                    </div>
+
+
+                                    <!-- TELÉFONO -->
+                                    <div class="col-md-6">
+
+                                        <label
+                                            for="telefono"
+                                            class="form-label">
+
+                                            Teléfono
+
+                                        </label>
+
+                                        <input
+                                            type="tel"
+                                            id="telefono"
+                                            name="telefono"
+                                            class="form-control"
+                                            placeholder="381-5555555">
+
+                                    </div>
+
+
+                                    <!-- DIRECCIÓN -->
+                                    <div class="col-md-6">
+
+                                        <label
+                                            for="direccion"
+                                            class="form-label">
+
+                                            Dirección
+
+                                        </label>
+
+                                        <input
+                                            type="text"
+                                            id="direccion"
+                                            name="direccion"
+                                            class="form-control"
+                                            placeholder="Ej: Av. Belgrano 123">
+
+                                    </div>
+
+
+                                    <!-- CONTRASEÑA -->
+                                    <div class="col-12">
+
+                                        <label
+                                            for="password"
+                                            class="form-label">
+
+                                            Contraseña
+
+                                        </label>
+
+                                        <input
+                                            type="password"
+                                            id="password"
+                                            name="password"
+                                            class="form-control"
+                                            required>
+
+                                    </div>
+
+
+                                    <!-- CHECKBOX -->
+                                    <div class="col-12">
+
+                                        <div class="form-check">
+
+                                            <input
+                                                class="form-check-input"
+                                                type="checkbox"
+                                                id="terminos"
+                                                required>
+
+                                            <label
+                                                class="form-check-label"
+                                                for="terminos">
+
+                                                Acepto los términos y condiciones.
+
+                                            </label>
+
+                                        </div>
+
+                                    </div>
+
+
+                                    <!-- BOTÓN -->
+                                    <div class="col-12 d-grid">
+
+                                        <button
+                                            type="submit"
+                                            class="btn btn-primary btn-lg">
+
+                                            Crear mi cuenta
+
+                                        </button>
+
+                                    </div>
+
+                                </div>
+
+                            </form>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+</main>
+
+
+<!-- =====================================================
+     FOOTER
+     ===================================================== -->
+
+<footer id="contacto" class="footer bg-dark text-white py-5">
+
+    <div class="container">
+
+        <div class="row g-4">
+
+
+            <div class="col-md-4">
+
+                <h2 class="h5">
+                    🛒 Supermercado Micuman
+                </h2>
+
+                <p class="text-white-50">
+                    Tu supermercado de confianza.
+                </p>
+
+            </div>
+
+
+            <div class="col-md-4">
+
+                <h2 class="h5">
+                    Contacto
+                </h2>
+
+                <p class="text-white-50 mb-1">
+                    📞 381-42345456
+                </p>
+
+                <p class="text-white-50">
+                    ✉️ info@supermercado.com
+                </p>
+
+            </div>
+
+
+            <div class="col-md-4">
+
+                <h2 class="h5">
+                    Atención
+                </h2>
+
+                <p class="text-white-50">
+                    Lunes a sábados
+                    <br>
+                    08:00 a 22:00 hs
+                </p>
+
+            </div>
+
+
+        </div>
+
+
+        <hr>
+
+
+        <div class="text-center">
+
+            <p class="mb-0 text-white-50">
+
+                &copy; 2026 Supermercado Micuman -
+                Todos los derechos reservados.
+
+            </p>
+
+        </div>
+
+    </div>
+
+</footer>
+
+
+<!-- =====================================================
+     BOOTSTRAP 5 JS
+     Necesario para navbar responsive y componentes.
+     ===================================================== -->
+
+<script
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js">
+</script>
+```
+
 </body>
+
 </html>
