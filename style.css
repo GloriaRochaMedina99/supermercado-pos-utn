@@ -267,25 +267,11 @@ body {
    PRODUCTOS DESTACADOS
 ======================================== */
 
-.product-card {
-    border: none;
-    border-radius: 15px;
-    overflow: hidden;
-    background-color: white;
-    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.1);
-    transition: 0.3s;
-}
+/* ========================================
+   PRODUCTOS DESTACADOS
+======================================== */
 
-.product-card:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.18);
-}
-
-/* Todas las imágenes de productos quedan
-   exactamente con el mismo espacio */
-
-.product-card img,
-.producto-img {
+#productos .producto-img {
     width: 100%;
     height: 220px;
     object-fit: contain;
@@ -293,31 +279,20 @@ body {
     background-color: #f8f9fa;
 }
 
-/* Títulos alineados */
-
+/* Todos los títulos ocupan el mismo espacio */
 #productos .card-body h3 {
     min-height: 48px;
-    margin-top: 15px;
 }
 
-/* Contenido de las tarjetas */
+/* Todas las tarjetas tienen la misma altura */
+#productos .product-card {
+    height: 100%;
+}
 
+/* El botón queda siempre abajo */
 #productos .card-body {
     display: flex;
     flex-direction: column;
-}
-
-/* Precios */
-
-.price {
-    color: var(--verde-oscuro);
-    font-size: 1.5rem;
-    font-weight: 800;
-}
-
-.old-price {
-    color: #6c757d;
-    text-decoration: line-through;
 }
 
 /* ========================================
