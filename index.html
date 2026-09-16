@@ -3,44 +3,64 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+    
     <!-- SEO y Metadatos -->
     <meta name="description" content="Supermercado online con productos, ofertas y promociones.">
     <meta name="keywords" content="supermercado, productos, ofertas, promociones, compras">
     <meta name="author" content="Grupo de Trabajo">
     <meta name="robots" content="index, follow">
-
+    
     <title>Supermercado Online</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+
 
     <!-- Bootstrap 5 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
-<body class="bg-light">
+<body>
 
-    <!-- Navbar de Bootstrap -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-success sticky-top shadow-sm">
-        <div class="container">
-            <a class="navbar-brand fw-bold" href="#">Supermercado POS</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item"><a class="nav-link active" href="#inicio">Inicio</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#productos">Productos</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#ofertas">Ofertas</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#registro">Registro</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#contacto">Contacto</a></li>
-                </ul>
-            </div>
+    <!-- Header semántico: envuelve la navegación principal -->
+    <header>
+       <nav class="navbar navbar-expand-lg sticky-top shadow-sm">
+    <div class="container">
+        <a class="navbar-brand" href="#inicio">Supermercado POS</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarNav" aria-controls="navbarNav"
+                aria-expanded="false" aria-label="Abrir menú de navegación">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto align-items-lg-center">
+                <li class="nav-item"><a class="nav-link active" href="#inicio">Inicio</a></li>
+                <li class="nav-item"><a class="nav-link" href="#productos">Productos</a></li>
+                <li class="nav-item"><a class="nav-link" href="#ofertas">Ofertas</a></li>
+                <li class="nav-item"><a class="nav-link" href="#registro">Registro</a></li>
+                <li class="nav-item"><a class="nav-link" href="#contacto">Contacto</a></li>
+                <li class="nav-item ms-lg-3">
+                    <span class="badge" id="carrito-contador" data-bs-toggle="modal" data-bs-target="#modalCarrito" style="cursor: pointer;" aria-live="polite">
+    🛒 <span id="carrito-cantidad">0</span>
+</span>
+                </li>
+            </ul>
         </div>
-    </nav>
+    </div>
+</nav>
+    </header>
 
     <!-- Contenido Principal -->
     <main class="container my-5">
-        
-        <!-- Catálogo de Productos con Tarjetas de Bootstrap -->
+
+        <!-- Sección de Inicio -->
+        <section id="inicio" class="text-center mb-5">
+            <h1 class="fw-bold text-success">Bienvenido a Supermercado Online</h1>
+            <p class="text-muted">Todo lo que necesitás para tu compra semanal, con las mejores ofertas.</p>
+        </section>
+
+        <!-- Catálogo de Productos con Modales Emergentes -->
         <section id="productos" class="mb-5">
             <div class="text-center mb-4">
                 <h2 class="fw-bold text-success">Catálogo de Productos</h2>
@@ -48,96 +68,299 @@
             </div>
 
             <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4">
-                
+
+                <!-- Almacén -->
                 <div class="col">
-                    <div class="card h-100 shadow-sm border-0">
+                    <article class="card h-100 shadow-sm border-0 overflow-hidden">
+                        <img src="img\almacen\fondo de pantalla.jpg" class="card-img-top img-producto" alt="Productos de Almacén">
                         <div class="card-body d-flex flex-column text-center">
                             <h3 class="card-title h5 text-success fw-bold">Almacén</h3>
                             <p class="card-text text-secondary flex-grow-1">Arroz, fideos, aceites, conservas y primeras marcas.</p>
                             <p class="fs-5 fw-bold text-dark">Desde $1.500</p>
-                            <button type="button" class="btn btn-outline-success w-100">Ver productos</button>
+                            <button type="button" class="btn btn-outline-success w-100 fw-bold" data-bs-toggle="modal" data-bs-target="#modalAlmacen">Ver productos</button>
                         </div>
-                    </div>
+                    </article>
                 </div>
 
+                <!-- Frescos y Lácteos -->
                 <div class="col">
-                    <div class="card h-100 shadow-sm border-0">
+                    <article class="card h-100 shadow-sm border-0 overflow-hidden">
+                        <img src="img\lacteos\fondo de pantalla.jpg" class="card-img-top img-producto" alt="Productos Lácteos">
                         <div class="card-body d-flex flex-column text-center">
                             <h3 class="card-title h5 text-success fw-bold">Frescos y Lácteos</h3>
                             <p class="card-text text-secondary flex-grow-1">Leche, quesos, yogures y productos refrigerados.</p>
                             <p class="fs-5 fw-bold text-dark">Desde $1.200</p>
-                            <button type="button" class="btn btn-outline-success w-100">Ver productos</button>
+                            <button type="button" class="btn btn-outline-success w-100 fw-bold" data-bs-toggle="modal" data-bs-target="#modalLacteos">Ver productos</button>
                         </div>
-                    </div>
+                    </article>
                 </div>
 
+                <!-- Frutas y Verduras -->
                 <div class="col">
-                    <div class="card h-100 shadow-sm border-0">
+                    <article class="card h-100 shadow-sm border-0 overflow-hidden">
+                        <img src="img\frutas-verduras\fondo de pantalla.jpg" class="card-img-top img-producto" alt="Frutas y Verduras">
                         <div class="card-body d-flex flex-column text-center">
                             <h3 class="card-title h5 text-success fw-bold">Frutas y Verduras</h3>
                             <p class="card-text text-secondary flex-grow-1">Frutas y verduras frescas seleccionadas día a día.</p>
                             <p class="fs-5 fw-bold text-dark">Desde $800</p>
-                            <button type="button" class="btn btn-outline-success w-100">Ver productos</button>
+                            <button type="button" class="btn btn-outline-success w-100 fw-bold" data-bs-toggle="modal" data-bs-target="#modalFrutas">Ver productos</button>
                         </div>
-                    </div>
+                    </article>
                 </div>
 
+                <!-- Bebidas -->
                 <div class="col">
-                    <div class="card h-100 shadow-sm border-0">
+                    <article class="card h-100 shadow-sm border-0 overflow-hidden">
+                        <img src="img\bebidas\fondo de pantalla.jpg" class="card-img-top img-producto" alt="Bebidas Variadas">
                         <div class="card-body d-flex flex-column text-center">
                             <h3 class="card-title h5 text-success fw-bold">Bebidas</h3>
                             <p class="card-text text-secondary flex-grow-1">Gaseosas, aguas, jugos y bebidas para toda la familia.</p>
                             <p class="fs-5 fw-bold text-dark">Desde $1.000</p>
-                            <button type="button" class="btn btn-outline-success w-100">Ver productos</button>
+                            <button type="button" class="btn btn-outline-success w-100 fw-bold" data-bs-toggle="modal" data-bs-target="#modalBebidas">Ver productos</button>
+                        </div>
+                    </article>
+                </div>
+
+            </div>
+        </section>
+
+      <!-- Modal Almacén -->
+<div class="modal fade" id="modalAlmacen" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-header text-white" style="background-color: #2563eb;">
+                <h5 class="modal-title fw-bold">Productos de Almacén</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row row-cols-1 row-cols-md-3 g-3 text-center">
+                    <div class="col">
+                        <div class="card h-100 p-2 shadow-sm">
+                            <h6 class="fw-bold mt-2">Aceite Cocina 1L</h6>
+                            <p class="text-success fw-bold fs-5">$1.800</p>
+                            <button class="btn btn-primary btn-agregar" data-id="alm1" data-nombre="Aceite Cocina 1L" data-precio="1800">Agregar al carrito</button>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="card h-100 p-2 shadow-sm">
+                            <h6 class="fw-bold mt-2">Arroz Largo Fino 1kg</h6>
+                            <p class="text-success fw-bold fs-5">$1.500</p>
+                            <button class="btn btn-primary btn-agregar" data-id="alm2" data-nombre="Arroz Largo Fino 1kg" data-precio="1500">Agregar al carrito</button>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="card h-100 p-2 shadow-sm">
+                            <h6 class="fw-bold mt-2">Harina 0000 1kg</h6>
+                            <p class="text-success fw-bold fs-5">$1.200</p>
+                            <button class="btn btn-primary btn-agregar" data-id="alm3" data-nombre="Harina 0000 1kg" data-precio="1200">Agregar al carrito</button>
                         </div>
                     </div>
                 </div>
-
             </div>
-        </section>
+        </div>
+    </div>
+</div>
 
-        <!-- Ofertas de la Semana -->
-        <section id="ofertas" class="mb-5 p-4 bg-white rounded-3 shadow-sm border">
-            <h2 class="h4 fw-bold text-success mb-3">Ofertas de la Semana</h2>
-            <div class="row g-3">
-                <div class="col-md-4">
-                    <div class="p-3 bg-light rounded border-start border-4 border-success">
-                        <h3 class="h6 fw-bold">20% de descuento</h3>
-                        <p class="small text-muted mb-0">En frutas y verduras pagando con débito los martes.</p>
+<!-- Modal Frescos y Lácteos -->
+<div class="modal fade" id="modalLacteos" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-header text-white" style="background-color: #2563eb;">
+                <h5 class="modal-title fw-bold">Frescos y Lácteos</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row row-cols-1 row-cols-md-3 g-3 text-center">
+                    <div class="col">
+                        <div class="card h-100 p-2 shadow-sm">
+                            <h6 class="fw-bold mt-2">Yogur Bebible 1L</h6>
+                            <p class="text-success fw-bold fs-5">$1.400</p>
+                            <button class="btn btn-primary btn-agregar" data-id="lac1" data-nombre="Yogur Bebible 1L" data-precio="1400">Agregar al carrito</button>
+                        </div>
                     </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="p-3 bg-light rounded border-start border-4 border-success">
-                        <h3 class="h6 fw-bold">Envío Gratis</h3>
-                        <p class="small text-muted mb-0">En compras superiores a $15.000 en zona urbana.</p>
+                    <div class="col">
+                        <div class="card h-100 p-2 shadow-sm">
+                            <h6 class="fw-bold mt-2">Leche Entera 1L</h6>
+                            <p class="text-success fw-bold fs-5">$1.200</p>
+                            <button class="btn btn-primary btn-agregar" data-id="lac2" data-nombre="Leche Entera 1L" data-precio="1200">Agregar al carrito</button>
+                        </div>
                     </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="p-3 bg-light rounded border-start border-4 border-success">
-                        <h3 class="h6 fw-bold">2x1 en Bebidas</h3>
-                        <p class="small text-muted mb-0">Todos los viernes en productos seleccionados.</p>
+                    <div class="col">
+                        <div class="card h-100 p-2 shadow-sm">
+                            <h6 class="fw-bold mt-2">Queso Cremoso 500g</h6>
+                            <p class="text-success fw-bold fs-5">$3.100</p>
+                            <button class="btn btn-primary btn-agregar" data-id="lac3" data-nombre="Queso Cremoso 500g" data-precio="3100">Agregar al carrito</button>
+                        </div>
                     </div>
                 </div>
             </div>
-        </section>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Frutas y Verduras -->
+<div class="modal fade" id="modalFrutas" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-header text-white" style="background-color: #2563eb;">
+                <h5 class="modal-title fw-bold">Frutas y Verduras</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row row-cols-1 row-cols-md-3 g-3 text-center">
+                    <div class="col">
+                        <div class="card h-100 p-2 shadow-sm">
+                            <h6 class="fw-bold mt-2">Banana Ecuador 1kg</h6>
+                            <p class="text-success fw-bold fs-5">$1.100</p>
+                            <button class="btn btn-primary btn-agregar" data-id="fru1" data-nombre="Banana Ecuador 1kg" data-precio="1100">Agregar al carrito</button>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="card h-100 p-2 shadow-sm">
+                            <h6 class="fw-bold mt-2">Manzana Roja 1kg</h6>
+                            <p class="text-success fw-bold fs-5">$1.300</p>
+                            <button class="btn btn-primary btn-agregar" data-id="fru2" data-nombre="Manzana Roja 1kg" data-precio="1300">Agregar al carrito</button>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="card h-100 p-2 shadow-sm">
+                            <h6 class="fw-bold mt-2">Papas 1kg</h6>
+                            <p class="text-success fw-bold fs-5">$800</p>
+                            <button class="btn btn-primary btn-agregar" data-id="fru3" data-nombre="Papas 1kg" data-precio="800">Agregar al carrito</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Bebidas -->
+<div class="modal fade" id="modalBebidas" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-header text-white" style="background-color: #2563eb;">
+                <h5 class="modal-title fw-bold">Bebidas</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row row-cols-1 row-cols-md-3 g-3 text-center">
+                    <div class="col">
+                        <div class="card h-100 p-2 shadow-sm">
+                            <h6 class="fw-bold mt-2">Agua Mineral 1.5L</h6>
+                            <p class="text-success fw-bold fs-5">$1.000</p>
+                            <button class="btn btn-primary btn-agregar" data-id="beb1" data-nombre="Agua Mineral 1.5L" data-precio="1000">Agregar al carrito</button>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="card h-100 p-2 shadow-sm">
+                            <h6 class="fw-bold mt-2">Gaseosa Naranja 2.25L</h6>
+                            <p class="text-success fw-bold fs-5">$2.100</p>
+                            <button class="btn btn-primary btn-agregar" data-id="beb2" data-nombre="Gaseosa Naranja 2.25L" data-precio="2100">Agregar al carrito</button>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="card h-100 p-2 shadow-sm">
+                            <h6 class="fw-bold mt-2">Jugo de Naranja 1L</h6>
+                            <p class="text-success fw-bold fs-5">$1.600</p>
+                            <button class="btn btn-primary btn-agregar" data-id="beb3" data-nombre="Jugo de Naranja 1L" data-precio="1600">Agregar al carrito</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Sección Ofertas -->
+<section id="ofertas" class="my-5 p-4 rounded-4 shadow-sm bg-white">
+    <h2 class="fw-bold mb-3 text-primary">🔥 Ofertas Destacadas</h2>
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+        <div class="col">
+            <div class="card h-100 p-2">
+                <span class="badge bg-danger position-absolute top-0 end-0 m-2 fw-bold">-20% OFF</span>
+                <div class="card-body text-center">
+                    <h5 class="card-title fw-bold">Aceite de Girasol 1L</h5>
+                    <p class="text-decoration-line-through text-muted small mb-1">$1.800</p>
+                    <p class="fs-4 fw-bold text-success mb-2">$1.440</p>
+                    <button class="btn btn-primary w-100 btn-agregar" data-id="of1" data-nombre="Aceite Girasol 1L" data-precio="1440">Agregar al Carrito</button>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card h-100 p-2">
+                <span class="badge bg-danger position-absolute top-0 end-0 m-2 fw-bold">-15% OFF</span>
+                <div class="card-body text-center">
+                    <h5 class="card-title fw-bold">Leche Entera 1L</h5>
+                    <p class="text-decoration-line-through text-muted small mb-1">$1.200</p>
+                    <p class="fs-4 fw-bold text-success mb-2">$1.020</p>
+                    <button class="btn btn-primary w-100 btn-agregar" data-id="of2" data-nombre="Leche Entera 1L" data-precio="1020">Agregar al Carrito</button>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card h-100 p-2">
+                <span class="badge bg-danger position-absolute top-0 end-0 m-2 fw-bold">2x1</span>
+                <div class="card-body text-center">
+                    <h5 class="card-title fw-bold">Gaseosa Cola 2.25L</h5>
+                    <p class="text-decoration-line-through text-muted small mb-1">$2.500</p>
+                    <p class="fs-4 fw-bold text-success mb-2">$1.250 / un.</p>
+                    <button class="btn btn-primary w-100 btn-agregar" data-id="of3" data-nombre="Gaseosa Cola 2.25L" data-precio="1250">Agregar al Carrito</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Modal del Carrito (CRUD Interactivo) -->
+<div class="modal fade" id="modalCarrito" tabindex="-1" aria-labelledby="modalCarritoLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-header text-white">
+                <h5 class="modal-title fw-bold" id="modalCarritoLabel">🛒 Tu Carrito de Compras</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+            </div>
+            <div class="modal-body">
+                <ul class="list-group list-group-flush" id="lista-carrito">
+                    <!-- Los productos guardados se renderizan dinámicamente -->
+                </ul>
+                <div class="d-flex justify-content-between align-items-center mt-4 pt-3 border-top">
+                    <span class="fs-5 fw-bold">Total estimado:</span>
+                    <span class="fs-3 fw-bold text-primary" id="total-carrito">$0</span>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Seguir Comprando</button>
+                <button type="button" class="btn btn-success" id="btn-finalizar">Finalizar Compra</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 
         <!-- Formulario de Registro Estilizado -->
         <section id="registro" class="p-4 bg-white rounded-3 shadow-sm border col-md-8 mx-auto">
             <h2 class="h4 fw-bold text-success mb-3 text-center">Registro de Cliente</h2>
-            <form action="#" method="POST">
+            <form id="form-registro" novalidate>
                 <div class="mb-3">
                     <label for="nombre" class="form-label fw-bold">Nombre completo:</label>
-                    <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Ej: Maria Perez" required>
+                    <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Ej: Maria Perez" required minlength="3">
+                    <div class="invalid-feedback">Ingresá tu nombre completo (mínimo 3 caracteres).</div>
                 </div>
                 <div class="mb-3">
                     <label for="email" class="form-label fw-bold">Correo electrónico:</label>
                     <input type="email" class="form-control" id="email" name="email" placeholder="correo@ejemplo.com" required>
+                    <div class="invalid-feedback">Ingresá un correo electrónico válido.</div>
                 </div>
                 <div class="mb-3">
                     <label for="password" class="form-label fw-bold">Contraseña:</label>
-                    <input type="password" class="form-control" id="password" name="password" required>
+                    <input type="password" class="form-control" id="password" name="password" required minlength="6">
+                    <div class="invalid-feedback">La contraseña debe tener al menos 6 caracteres.</div>
                 </div>
                 <button type="submit" class="btn btn-success w-100 fw-bold">Crear mi Cuenta</button>
+                <div id="registro-exito" class="alert alert-success mt-3 d-none" role="alert">
+                    ¡Cuenta creada correctamente! Bienvenido/a.
+                </div>
             </form>
         </section>
 
@@ -153,5 +376,9 @@
 
     <!-- Bootstrap 5 JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- JS propio (TP4) -->
+    <script src="script.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="script.js"></script>
 </body>
 </html>
