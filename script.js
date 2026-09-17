@@ -23,3 +23,17 @@ formularioRegistro.addEventListener("submit", function(event) {
 
     formularioRegistro.reset();
 });
+const mediosPago = document.getElementById("medios-pago");
+const envios = document.getElementById("envios");
+
+mediosPago.addEventListener("click", function() {
+    alert("💳 Para conocer los medios de pago disponibles, consultá en el supermercado.");
+});
+
+envios.addEventListener("click", function() {
+    alert("🚚 Para conocer la disponibilidad y condiciones de envío, consultá en el supermercado.");
+});const emailContacto = document.getElementById("email-contacto");
+
+emailContacto.addEventListener("click", function() {
+    alert("📧 Podés comunicarte con nosotros por correo electrónico.");
+});
