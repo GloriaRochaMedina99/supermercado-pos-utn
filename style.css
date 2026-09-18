@@ -412,7 +412,8 @@ footer hr {
 ======================================== */
 
 .categoria-card,
-.product-card {
+.product-card,
+.servicio-card {
     border-radius: 12px;
     overflow: hidden; /* redondea también la imagen superior */
     border: 1px solid var(--gris-borde);
@@ -422,9 +423,20 @@ footer hr {
 }
 
 .categoria-card:hover,
-.product-card:hover {
+.product-card:hover,
+.servicio-card:hover {
     transform: translateY(-4px);
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.12);
+}
+
+/* Las tarjetas de servicios son clickeables (abren un modal) */
+.servicio-card {
+    cursor: pointer;
+}
+
+.servicio-card:focus-visible {
+    outline: 3px solid var(--verde);
+    outline-offset: 2px;
 }
 
 /* El contenido interno se acomoda en columna para poder empujar

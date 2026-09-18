@@ -16,6 +16,9 @@
     <!-- Bootstrap 5 -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 
+    <!-- Font Awesome (íconos de redes sociales y contacto) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
     <!-- CSS propio -->
     <link rel="stylesheet" href="style.css">
 </head>
@@ -51,7 +54,7 @@
                         <a class="nav-link" href="#ofertas">Ofertas</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#registro">Registrarse</a>
+                        <a class="nav-link" href="#contacto">Contacto</a>
                     </li>
                 </ul>
 
@@ -322,31 +325,37 @@
 
         <div class="row g-4 text-center">
             <div class="col-12 col-md-4">
-                <div class="card h-100 shadow-sm">
+                <div class="card servicio-card h-100 shadow-sm" role="button" tabindex="0"
+                    data-bs-toggle="modal" data-bs-target="#modalEnvios">
                     <div class="card-body">
                         <div class="display-5">🚚</div>
                         <h3 class="h5 fw-bold mt-3">Envíos a domicilio</h3>
-                        <p class="text-muted">Recibí tus compras en la puerta de tu casa.</p>
+                        <p class="text-muted mb-1">Recibí tus compras en la puerta de tu casa.</p>
+                        <span class="badge text-bg-light border">Consultar cobertura</span>
                     </div>
                 </div>
             </div>
 
             <div class="col-12 col-md-4">
-                <div class="card h-100 shadow-sm">
+                <div class="card servicio-card h-100 shadow-sm" role="button" tabindex="0"
+                    data-bs-toggle="modal" data-bs-target="#modalPagos">
                     <div class="card-body">
                         <div class="display-5">💳</div>
                         <h3 class="h5 fw-bold mt-3">Múltiples medios de pago</h3>
-                        <p class="text-muted">Pagá como prefieras.</p>
+                        <p class="text-muted mb-1">Pagá como prefieras.</p>
+                        <span class="badge text-bg-light border">Ver medios de pago</span>
                     </div>
                 </div>
             </div>
 
             <div class="col-12 col-md-4">
-                <div class="card h-100 shadow-sm">
+                <div class="card servicio-card h-100 shadow-sm" role="button" tabindex="0"
+                    data-bs-toggle="modal" data-bs-target="#modalCalidad">
                     <div class="card-body">
                         <div class="display-5">⭐</div>
                         <h3 class="h5 fw-bold mt-3">Calidad garantizada</h3>
-                        <p class="text-muted">Productos seleccionados para vos.</p>
+                        <p class="text-muted mb-1">Productos seleccionados para vos.</p>
+                        <span class="badge text-bg-light border">Política de garantía</span>
                     </div>
                 </div>
             </div>
@@ -354,44 +363,108 @@
     </section>
 
     <!-- ==================================================
+         MODALES DE SERVICIOS
+    =================================================== -->
+
+    <!-- Modal: Envíos a domicilio (simulador de código postal) -->
+    <div class="modal fade" id="modalEnvios" tabindex="-1" aria-labelledby="modalEnviosLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalEnviosLabel">🚚 Envíos a domicilio</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Ingresá tu código postal para consultar la disponibilidad de envío:</p>
+                    <div class="input-group mb-3">
+                        <input type="text" id="input-cp" class="form-control" placeholder="Ej: 4123" maxlength="8">
+                        <button class="btn btn-success" type="button" id="btn-consultar-cp">Consultar</button>
+                    </div>
+                    <div id="resultado-cp" class="alert d-none" role="alert"></div>
+                    <p class="text-muted small mb-0">Envíos disponibles en Capital y alrededores. Entrega estimada: 24 a 48hs hábiles.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal: Medios de pago -->
+    <div class="modal fade" id="modalPagos" tabindex="-1" aria-labelledby="modalPagosLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalPagosLabel">💳 Medios de pago</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                </div>
+                <div class="modal-body">
+                    <h6 class="fw-bold">Bancos adheridos</h6>
+                    <ul class="mb-3">
+                        <li>Banco Macro</li>
+                        <li>Banco Nación</li>
+                        <li>Banco Galicia</li>
+                        <li>Brubank</li>
+                    </ul>
+                    <h6 class="fw-bold">Tarjetas aceptadas</h6>
+                    <p class="mb-3">Visa, Mastercard y Mercado Pago (débito y crédito).</p>
+                    <h6 class="fw-bold">Promociones</h6>
+                    <p class="mb-0">💳 3 cuotas sin interés con tarjetas de crédito seleccionadas.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal: Calidad garantizada -->
+    <div class="modal fade" id="modalCalidad" tabindex="-1" aria-labelledby="modalCalidadLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalCalidadLabel">⭐ Calidad garantizada</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                </div>
+                <div class="modal-body">
+                    <h6 class="fw-bold">Garantía de frescura</h6>
+                    <p class="mb-3">Seleccionamos nuestros productos frescos (frutas, verduras y lácteos) todos los días. Si un producto no cumple con nuestros estándares de calidad, lo reponemos sin cargo.</p>
+                    <h6 class="fw-bold">Política de devolución</h6>
+                    <p class="mb-0">Contás con 7 días desde la compra para solicitar el cambio o devolución de un producto en mal estado, presentando el comprobante de compra.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================================================
          REGISTRO
     =================================================== -->
-    <section id="registro" class="container py-5">
+    <section id="contacto" class="container py-5">
         <div class="row justify-content-center">
             <div class="col-12 col-md-8 col-lg-6">
                 <div class="card shadow-sm">
                     <div class="card-body p-4">
-                        <h2 class="text-center fw-bold mb-4">Registrate</h2>
+                        <h2 class="text-center fw-bold mb-1">Contacto y Consultas</h2>
+                        <p class="text-center text-muted mb-4">¿Tenés una duda o un pedido especial? Escribinos.</p>
 
-                       <form id="form-registro"> 
+                        <!-- El formulario envía los datos vía JavaScript (fetch) a Formspree,
+                             que reenvía cada consulta a rochagloria24@gmail.com -->
+                        <form id="form-registro" action="https://formspree.io/f/rochagloria24@gmail.com" method="POST">
                             <div class="mb-3">
                                 <label for="nombre" class="form-label">Nombre</label>
-                                <input type="text" id="nombre" class="form-control" placeholder="Ingresá tu nombre" required>
+                                <input type="text" id="nombre" name="nombre" class="form-control" placeholder="Ingresá tu nombre" required>
                             </div>
 
                             <div class="mb-3">
                                 <label for="email" class="form-label">Email</label>
-                                <input type="email" id="email" class="form-control" placeholder="ejemplo@email.com" required>
+                                <input type="email" id="email" name="email" class="form-control" placeholder="ejemplo@email.com" required>
                             </div>
 
                             <div class="mb-3">
                                 <label for="telefono" class="form-label">Teléfono</label>
-                                <input type="tel" id="telefono" class="form-control" placeholder="Ingresá tu teléfono">
+                                <input type="tel" id="telefono" name="telefono" class="form-control" placeholder="Ingresá tu teléfono" required>
                             </div>
 
                             <div class="mb-3">
                                 <label for="mensaje" class="form-label">Mensaje</label>
-                                <textarea id="mensaje" class="form-control" rows="4" placeholder="Escribí tu consulta"></textarea>
+                                <textarea id="mensaje" name="mensaje" class="form-control" rows="4" placeholder="Escribí tu consulta" required></textarea>
                             </div>
 
-                            <div class="form-check mb-3">
-                                <input class="form-check-input" type="checkbox" id="terminos" required>
-                                <label class="form-check-label" for="terminos">
-                                    Acepto los términos y condiciones.
-                                </label>
-                            </div>
-
-                            <button type="submit" class="btn btn-success w-100">Registrarme</button>
+                            <button type="submit" class="btn btn-success w-100">Enviar consulta</button>
                         </form>
                     </div>
                 </div>
@@ -405,24 +478,48 @@
     <footer>
         <div class="container">
             <div class="row g-4">
-                <div class="col-12 col-md-4">
+                <div class="col-12 col-sm-6 col-lg-3">
                     <h5 class="fw-bold">🛒 Supermercado Micuman</h5>
                     <p>Tu supermercado de confianza.</p>
                 </div>
 
-                <div class="col-12 col-md-4">
+                <div class="col-12 col-sm-6 col-lg-3">
                     <h5 class="fw-bold">Información</h5>
-                    <p class="mb-1">Atención al cliente</p>
-                    <p class="mb-1" id="medios-pago">Medios de pago</p>
-                    <p id="envios">Envíos</p>
-                   
+                    <p class="mb-1"><a href="#contacto" id="atencion-cliente">Atención al cliente</a></p>
+                    <p class="mb-1"><a href="#" id="medios-pago" data-bs-toggle="modal" data-bs-target="#modalPagos">Medios de pago</a></p>
+                    <p><a href="#" id="envios" data-bs-toggle="modal" data-bs-target="#modalEnvios">Envíos</a></p>
                 </div>
 
-                <div class="col-12 col-md-4">
+                <div class="col-12 col-sm-6 col-lg-3">
                     <h5 class="fw-bold">Contacto</h5>
-                    <p class="mb-1">📞 Teléfono</p>
-                   <p class="mb-1" id="email-contacto">📧 Email</p>
-                    <p>📍 Tucumán, Argentina</p>
+                    <p class="mb-1">
+                        <i class="fa-solid fa-phone"></i>
+                        <a href="tel:+5493814699126">+54 9 381 469-9126</a>
+                    </p>
+                    <p class="mb-1">
+                        <i class="fa-brands fa-whatsapp"></i>
+                        <a href="https://wa.me/5493814699126" target="_blank" rel="noopener">Escribinos por WhatsApp</a>
+                    </p>
+                    <p class="mb-1">
+                        <i class="fa-solid fa-envelope"></i>
+                        <a href="mailto:rochagloria24@gmail.com">rochagloria24@gmail.com</a>
+                    </p>
+                    <p><i class="fa-solid fa-location-dot"></i> Tucumán, Argentina</p>
+                </div>
+
+                <div class="col-12 col-sm-6 col-lg-3">
+                    <h5 class="fw-bold">Síguenos</h5>
+                    <div class="d-flex gap-2 footer-redes">
+                        <a href="https://github.com/rochagloria" target="_blank" rel="noopener" class="footer-red-link" aria-label="GitHub del equipo">
+                            <i class="fa-brands fa-github"></i>
+                        </a>
+                        <a href="https://facebook.com/supermercadomicuman" target="_blank" rel="noopener" class="footer-red-link" aria-label="Facebook">
+                            <i class="fa-brands fa-facebook-f"></i>
+                        </a>
+                        <a href="https://instagram.com/supermercadomicuman" target="_blank" rel="noopener" class="footer-red-link" aria-label="Instagram">
+                            <i class="fa-brands fa-instagram"></i>
+                        </a>
+                    </div>
                 </div>
             </div>
 

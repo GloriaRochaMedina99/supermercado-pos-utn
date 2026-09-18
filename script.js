@@ -545,86 +545,147 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   /* ============================================================
-     11. FORMULARIO DE REGISTRO (lógica de Lucía, integrada y corregida:
-     el script.js original tenía un typo que rompía el archivo)
-     ============================================================ */
-  function inicializarFormularioRegistro() {
-    const formularioRegistro = document.getElementById("form-registro");
+     11. FORMULARIO DE CONTACTO Y CONSULTAS
+     ------------------------------------------------------------
+     Basado en la lógica original de Lucía (validación de campos
+     obligatorios), ahora adaptada para un envío REAL: el formulario
+     ya no es de "registro" sino de contacto, y sus datos se envían
+     mediante fetch al endpoint de Formspree definido en el atributo
+     "action" del <form> en index.html, que reenvía cada consulta a
+     rochagloria24@gmail.com.
 
-    formularioRegistro.addEventListener("submit", (evento) => {
+     Nota para la entrega: Formspree exige confirmar el primer envío
+     desde la bandeja de entrada del email de destino (un único mail
+     de verificación) antes de que los siguientes formularios lleguen
+     de forma automática.
+     ============================================================ */
+  function inicializarFormularioContacto() {
+    const formularioContacto = document.getElementById("form-registro");
+
+    formularioContacto.addEventListener("submit", async (evento) => {
       evento.preventDefault();
 
       const nombre = document.getElementById("nombre").value.trim();
       const email = document.getElementById("email").value.trim();
       const telefono = document.getElementById("telefono").value.trim();
       const mensaje = document.getElementById("mensaje").value.trim();
-      const terminos = document.getElementById("terminos").checked;
 
+      // Validación de campos obligatorios (se mantiene la lógica original de Lucía)
       if (nombre === "" || email === "" || telefono === "" || mensaje === "") {
         alert("Por favor, completá todos los campos.");
         return;
       }
 
-      if (!terminos) {
-        alert("Debés aceptar los términos y condiciones.");
-        return;
+      const botonEnviar = formularioContacto.querySelector('button[type="submit"]');
+      const textoOriginalBoton = botonEnviar.textContent;
+      botonEnviar.disabled = true;
+      botonEnviar.textContent = "Enviando...";
+
+      try {
+        const respuesta = await fetch(formularioContacto.action, {
+          method: "POST",
+          body: new FormData(formularioContacto),
+          headers: { Accept: "application/json" },
+        });
+
+        if (respuesta.ok) {
+          alert("¡Gracias! Tu consulta fue enviada correctamente. Te responderemos a la brevedad.");
+          formularioContacto.reset();
+        } else {
+          alert("No pudimos enviar tu consulta. Probá nuevamente o escribinos por WhatsApp.");
+        }
+      } catch (error) {
+        console.error("Error al enviar el formulario de contacto:", error);
+        alert("No pudimos conectarnos para enviar tu consulta. Verificá tu conexión e intentá nuevamente.");
+      } finally {
+        botonEnviar.disabled = false;
+        botonEnviar.textContent = textoOriginalBoton;
       }
-
-      alert("¡Registro realizado correctamente!");
-      formularioRegistro.reset();
     });
   }
 
   /* ============================================================
-     12. INFORMACIÓN / CONTACTO / SERVICIOS (lógica de Lucía)
-     ============================================================ */
-  function inicializarFooter() {
-    document.getElementById("medios-pago").addEventListener("click", () => {
-      alert("💳 Para conocer los medios de pago disponibles, consultá en el supermercado.");
-    });
-
-    document.getElementById("envios").addEventListener("click", () => {
-      alert("🚚 Para conocer la disponibilidad y condiciones de envío, consultá en el supermercado.");
-    });
-
-    document.getElementById("email-contacto").addEventListener("click", () => {
-      alert("📧 Podés comunicarte con nosotros por correo electrónico.");
-    });
-  }
-
-  /* ============================================================
-     12.5 FOOTER PROFESIONAL (columnas + redes sociales)
+     12. MODAL "ENVÍOS A DOMICILIO" - SIMULADOR DE CÓDIGO POSTAL
      ------------------------------------------------------------
-     No se modifica index.html: las 3 columnas existentes
-     (Marca, Información, Contacto) se acomodan en una grilla de
-     4 columnas parejas y se agrega dinámicamente la columna
-     "Síguenos", para que el footer luzca ordenado y completo
-     en cualquier tamaño de pantalla.
+     El modal se abre solo (data-bs-toggle en index.html); acá solo
+     se resuelve la consulta del código postal ingresado.
      ============================================================ */
-  function reorganizarFooter() {
-    const fila = document.querySelector("footer .row.g-4");
-    if (!fila) return;
+  function inicializarSimuladorCodigoPostal() {
+    const boton = document.getElementById("btn-consultar-cp");
+    const input = document.getElementById("input-cp");
+    const resultado = document.getElementById("resultado-cp");
+    if (!boton) return; // el modal todavía no existe en esta página
 
-    // 1 columna en celulares chicos, 2 en tablets/mobile grande, 4 en pantallas lg+
-    fila.querySelectorAll(":scope > div").forEach((columna) => {
-      columna.className = "col-12 col-sm-6 col-lg-3";
+    // Códigos postales con cobertura confirmada (se puede ampliar fácilmente)
+    const ZONAS_CON_COBERTURA = {
+      4123: "Envío disponible en Famaillá / Tucumán - Entrega en 24hs.",
+    };
+
+    function consultarCodigoPostal() {
+      const cp = input.value.trim();
+      resultado.classList.remove("d-none", "alert-success", "alert-warning");
+
+      if (cp === "") {
+        resultado.classList.add("alert-warning");
+        resultado.textContent = "Ingresá un código postal para consultar.";
+      } else if (ZONAS_CON_COBERTURA[cp]) {
+        resultado.classList.add("alert-success");
+        resultado.textContent = "✅ " + ZONAS_CON_COBERTURA[cp];
+      } else {
+        resultado.classList.add("alert-warning");
+        resultado.textContent = "Por ahora no tenemos cobertura confirmada para esa zona. Escribinos por WhatsApp y lo verificamos al instante.";
+      }
+    }
+
+    boton.addEventListener("click", consultarCodigoPostal);
+    input.addEventListener("keydown", (evento) => {
+      if (evento.key === "Enter") {
+        evento.preventDefault();
+        consultarCodigoPostal();
+      }
     });
-
-    const columnaRedes = document.createElement("div");
-    columnaRedes.className = "col-12 col-sm-6 col-lg-3";
-    columnaRedes.innerHTML = `
-      <h5 class="fw-bold">Síguenos</h5>
-      <div class="d-flex gap-2 footer-redes">
-        <a href="#" class="footer-red-link" aria-label="Instagram">📷</a>
-        <a href="#" class="footer-red-link" aria-label="Facebook">📘</a>
-        <a href="#" class="footer-red-link" aria-label="WhatsApp">💬</a>
-      </div>
-    `;
-    fila.appendChild(columnaRedes);
   }
 
   /* ============================================================
-     13. INICIALIZACIÓN GENERAL
+     12.5 ACCESIBILIDAD - Tarjetas de "Nuestros servicios"
+     ------------------------------------------------------------
+     Las tarjetas usan role="button" y data-bs-toggle="modal" para
+     abrir su modal con el mouse. Bootstrap sólo escucha el evento
+     "click", así que acá sumamos Enter/Espacio para que también
+     se puedan abrir navegando con teclado.
+     ============================================================ */
+  function inicializarAccesibilidadServicios() {
+    document.querySelectorAll(".servicio-card").forEach((tarjeta) => {
+      tarjeta.addEventListener("keydown", (evento) => {
+        if (evento.key === "Enter" || evento.key === " ") {
+          evento.preventDefault();
+          tarjeta.click();
+        }
+      });
+    });
+  }
+
+  /* ============================================================
+     13. FOOTER - "Atención al cliente"
+     ------------------------------------------------------------
+     "Medios de pago" y "Envíos" abren sus modales solos vía
+     data-bs-toggle en el HTML; el teléfono, WhatsApp y email ya
+     son enlaces reales (tel:, wa.me, mailto:). Solo hace falta
+     resolver el link de "Atención al cliente", que lleva a la
+     sección de contacto.
+     ============================================================ */
+  function inicializarAtencionAlCliente() {
+    const link = document.getElementById("atencion-cliente");
+    if (!link) return;
+
+    link.addEventListener("click", (evento) => {
+      evento.preventDefault();
+      document.getElementById("contacto").scrollIntoView({ behavior: "smooth", block: "start" });
+    });
+  }
+
+  /* ============================================================
+     14. INICIALIZACIÓN GENERAL
      ============================================================ */
   crearOffcanvasCarrito();
   inicializarBotonCarritoNavbar();
@@ -633,9 +694,10 @@ document.addEventListener("DOMContentLoaded", () => {
   inicializarPlaceholdersDeImagen();
   inicializarBuscador();
   inicializarOfertas();
-  inicializarFormularioRegistro();
-  inicializarFooter();
-  reorganizarFooter();
+  inicializarFormularioContacto();
+  inicializarSimuladorCodigoPostal();
+  inicializarAtencionAlCliente();
+  inicializarAccesibilidadServicios();
 
   // Pinta el carrito con lo que haya quedado guardado de una sesión anterior
   actualizarCarrito();
