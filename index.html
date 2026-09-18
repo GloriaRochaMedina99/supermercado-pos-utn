@@ -363,7 +363,7 @@
                     <div class="card-body p-4">
                         <h2 class="text-center fw-bold mb-4">Registrate</h2>
 
-                        <form>
+                       <form id="form-registro"> 
                             <div class="mb-3">
                                 <label for="nombre" class="form-label">Nombre</label>
                                 <input type="text" id="nombre" class="form-control" placeholder="Ingresá tu nombre" required>
@@ -413,14 +413,15 @@
                 <div class="col-12 col-md-4">
                     <h5 class="fw-bold">Información</h5>
                     <p class="mb-1">Atención al cliente</p>
-                    <p class="mb-1">Medios de pago</p>
-                    <p>Envíos</p>
+                    <p class="mb-1" id="medios-pago">Medios de pago</p>
+                    <p id="envios">Envíos</p>
+                   
                 </div>
 
                 <div class="col-12 col-md-4">
                     <h5 class="fw-bold">Contacto</h5>
                     <p class="mb-1">📞 Teléfono</p>
-                    <p class="mb-1">📧 Email</p>
+                   <p class="mb-1" id="email-contacto">📧 Email</p>
                     <p>📍 Tucumán, Argentina</p>
                 </div>
             </div>
@@ -437,7 +438,7 @@
          BOOTSTRAP JAVASCRIPT
     =================================================== -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-
+<script src="script.js"></script>
 </body>
 
 </html>
