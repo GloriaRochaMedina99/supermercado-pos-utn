@@ -1,8 +1,15 @@
 /* ============================================================
    SUPERMERCADO MICUMAN - script.js
    TP4 - Programación IV (UTN-FRT)
-   Funcionalidades: Búsqueda, Catálogo por categorías dinámico,
-   Carrito de compras (CRUD) y Ofertas/Promociones.
+   
+
+   REFACTOR (Tailwind):
+   - El HTML ya no usa Bootstrap, por lo que los componentes que
+     antes daba Bootstrap JS (carrito lateral, modales, menú móvil
+     y carrusel) ahora se resuelven acá con JavaScript propio.
+   - Los selectores ya no dependen de clases de estilo: se usan
+     atributos data-* (data-producto, data-agregar, data-filtro...)
+     y ids, así cambiar el diseño no rompe la lógica.
    ============================================================ */
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -50,12 +57,27 @@ document.addEventListener("DOMContentLoaded", () => {
     ],
   };
 
-  // Traduce el texto visible de la categoría (h3 de cada tarjeta) a la clave del objeto anterior
-  const mapaNombreCategoria = {
-    "Almacén": "almacen",
-    "Lácteos": "lacteos",
-    "Frutas y Verduras": "frutas",
-    "Bebidas": "bebidas",
+  /* ============================================================
+     1.5 CLASES DE TAILWIND PARA LO QUE GENERA JAVASCRIPT
+     ------------------------------------------------------------
+     Las tarjetas del flyer están escritas a mano en index.html.
+     Las tarjetas de "Ver productos" por categoría se generan acá,
+     y deben verse igual: por eso comparten estas clases.
+     Si se cambia el estilo de una tarjeta en el HTML, hay que
+     actualizar también este objeto.
+     ============================================================ */
+  const CLASES = {
+    tarjeta: "relative flex h-full flex-col overflow-hidden rounded-2xl border border-white/70 bg-white shadow-[0_6px_18px_rgba(0,0,0,0.18)] transition duration-200 hover:-translate-y-1 hover:shadow-[0_14px_28px_rgba(0,0,0,0.28)]",
+    imagenProducto: "h-44 w-full bg-[#f1f8f2] object-contain p-3 min-[1400px]:h-[260px]",
+    categoriaProducto: "text-xs font-semibold uppercase tracking-wide text-[#5b6572]",
+    tituloProducto: "mt-1 min-h-[3.5rem] text-lg font-bold leading-snug text-[#2e7d32]",
+    precioProducto: "mb-4 text-3xl font-extrabold text-[#d32f2f]",
+    botonAgregar: "mt-auto rounded-xl bg-[#2e7d32] px-4 py-2.5 font-bold text-white transition hover:bg-[#1b5e20] active:scale-95",
+    botonCantidad: "h-8 w-8 rounded-md border border-[#cfd6dd] text-lg leading-none hover:bg-gray-100",
+    botonEliminar: "rounded-md border border-[#ef9a9a] px-2 py-1 text-sm hover:bg-[#ffebee]",
+    etiquetaPromo: "ml-2 rounded-full bg-[#fbc02d] px-2 py-0.5 text-xs font-bold text-[#1b5e20]",
+    alertaExito: "mb-3 rounded-lg border border-[#a5d6a7] bg-[#e8f5e9] px-4 py-3 text-sm text-[#1b5e20]",
+    alertaAviso: "mb-3 rounded-lg border border-[#ffe082] bg-[#fff8e1] px-4 py-3 text-sm text-[#5f4300]",
   };
 
   /* ============================================================
@@ -96,11 +118,6 @@ document.addEventListener("DOMContentLoaded", () => {
     return "$" + numero.toLocaleString("es-AR");
   }
 
-  // Convierte un texto de precio del HTML ("$1.500") a número (1500)
-  function textoAPrecio(texto) {
-    return parseInt(texto.replace(/[^\d]/g, ""), 10) || 0;
-  }
-
   // Quita tildes y pasa a minúsculas, para comparar texto sin importar acentos/mayúsculas
   function normalizarTexto(texto) {
     return texto
@@ -113,23 +130,23 @@ document.addEventListener("DOMContentLoaded", () => {
      3.5 PLACEHOLDERS ELEGANTES DE IMAGEN
      ------------------------------------------------------------
      Mientras la compañera de diseño no cargue las fotos reales,
-     cualquier <img> que no pueda cargarse se reemplaza por un
-     contenedor prolijo con un ícono vectorial (ver .img-placeholder
-     en style.css), en vez de mostrarse "roto" o vacío. El día que
-     se agreguen imágenes reales con las mismas rutas, se muestran
+     cualquier <img data-fallback> que no pueda cargarse se
+     reemplaza por un contenedor prolijo con un ícono vectorial,
+     en vez de mostrarse "roto" o vacío. El día que se agreguen
+     imágenes reales con las mismas rutas, se muestran
      automáticamente sin tocar el código.
      ============================================================ */
   const ICONO_PRODUCTO_SVG = `
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <svg class="h-auto w-[42%] max-w-[64px] opacity-60" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
       <path d="M3 7h18l-1.4 12.1a2 2 0 0 1-2 1.9H6.4a2 2 0 0 1-2-1.9L3 7Z"></path>
       <path d="M8 7V5.5a4 4 0 0 1 8 0V7"></path>
     </svg>`;
 
-  // Reemplaza una <img> por el contenedor de placeholder, conservando sus clases
-  // (así las reglas de tamaño de style.css, como .categoria-img o .producto-img, se mantienen)
+  // Reemplaza una <img> por el contenedor de placeholder, conservando sus clases de tamaño
   function convertirEnPlaceholder(img) {
     const placeholder = document.createElement("div");
-    placeholder.className = img.className + " img-placeholder";
+    placeholder.className =
+      img.className + " flex items-center justify-center bg-[linear-gradient(135deg,#e6f2ec,#eef1ef)] text-[#0d5c38]";
     placeholder.setAttribute("role", "img");
     placeholder.setAttribute("aria-label", img.alt || "Producto sin imagen disponible");
     placeholder.innerHTML = ICONO_PRODUCTO_SVG;
@@ -146,63 +163,32 @@ document.addEventListener("DOMContentLoaded", () => {
     img.addEventListener("error", () => convertirEnPlaceholder(img), { once: true });
   }
 
-  // Aplica el placeholder a todas las imágenes de categorías y de productos destacados
+  // Aplica el placeholder a todas las imágenes marcadas con data-fallback
   function inicializarPlaceholdersDeImagen() {
-    document.querySelectorAll(".categoria-img, #productos .producto-img").forEach(activarPlaceholderSiFalla);
+    document.querySelectorAll("img[data-fallback]").forEach(activarPlaceholderSiFalla);
   }
 
   /* ============================================================
-     4. CARRITO - OFFCANVAS (interfaz visual)
+     4. CARRITO - PANEL LATERAL (interfaz visual)
      ------------------------------------------------------------
-     Se inyecta una sola vez en el DOM al cargar la página.
-     Se usa el componente Offcanvas de Bootstrap 5 (ya incluido
-     en el proyecto) para mostrar el listado del carrito.
-
-     Se configura con { backdrop: false, scroll: true } para que
-     NO aparezca el fondo oscuro que bloquea la pantalla: así la
-     usuaria puede seguir haciendo clic y scrolleando el catálogo
-     mientras el panel del carrito permanece abierto y se va
+     El panel (#panel-carrito) ya está escrito en index.html.
+     Se muestra/oculta deslizándolo con las clases "translate-x-full"
+     e "invisible". NO hay fondo oscuro que bloquee la pantalla:
+     la usuaria puede seguir haciendo clic y scrolleando el
+     catálogo mientras el panel permanece abierto y se va
      actualizando en tiempo real.
      ============================================================ */
-  let instanciaOffcanvasCarrito = null; // referencia única a la instancia de Bootstrap
+  const panelCarrito = document.getElementById("panel-carrito");
 
-  function crearOffcanvasCarrito() {
-    const html = `
-      <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasCarrito" aria-labelledby="offcanvasCarritoLabel">
-        <div class="offcanvas-header border-bottom">
-          <h5 class="offcanvas-title" id="offcanvasCarritoLabel">🛒 Tu carrito</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Cerrar"></button>
-        </div>
-        <div class="offcanvas-body d-flex flex-column">
-          <div id="carrito-lista" class="flex-grow-1"></div>
-          <div id="carrito-vacio" class="text-center text-muted py-4 d-none">
-            Tu carrito está vacío.
-          </div>
-          <div class="border-top pt-3 mt-3">
-            <div class="d-flex justify-content-between">
-              <span>Subtotal</span>
-              <span id="carrito-subtotal">$0</span>
-            </div>
-            <p id="carrito-envio-msg" class="small text-success mb-2"></p>
-            <div class="d-flex justify-content-between fw-bold fs-5 mb-3">
-              <span>Total</span>
-              <span id="carrito-total">$0</span>
-            </div>
-            <button id="btn-vaciar-carrito" class="btn btn-outline-danger w-100">Vaciar carrito</button>
-          </div>
-        </div>
-      </div>
-    `;
-    document.body.insertAdjacentHTML("beforeend", html);
+  function abrirCarrito() {
+    panelCarrito.classList.remove("translate-x-full", "invisible");
+  }
 
-    // Se crea la instancia UNA sola vez, ya con backdrop desactivado y scroll permitido.
-    // Si se creara de nuevo en cada apertura (getOrCreateInstance sin config), Bootstrap
-    // ignoraría estas opciones porque ya existiría una instancia previa.
-    instanciaOffcanvasCarrito = new bootstrap.Offcanvas(document.getElementById("offcanvasCarrito"), {
-      backdrop: false,
-      scroll: true,
-    });
+  function cerrarCarrito() {
+    panelCarrito.classList.add("translate-x-full", "invisible");
+  }
 
+  function inicializarPanelCarrito() {
     // Delegación de eventos: sumar / restar / eliminar un ítem del carrito
     document.getElementById("carrito-lista").addEventListener("click", (evento) => {
       const boton = evento.target.closest("button[data-accion]");
@@ -221,10 +207,12 @@ document.addEventListener("DOMContentLoaded", () => {
       carrito = [];
       actualizarCarrito();
     });
-  }
 
-  function abrirCarrito() {
-    if (instanciaOffcanvasCarrito) instanciaOffcanvasCarrito.show();
+    // Cerrar con la X o con la tecla Escape
+    document.getElementById("btn-cerrar-carrito").addEventListener("click", cerrarCarrito);
+    document.addEventListener("keydown", (evento) => {
+      if (evento.key === "Escape") cerrarCarrito();
+    });
   }
 
   /* ============================================================
@@ -295,41 +283,40 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function renderizarBadgeCarrito() {
-    const badge = document.querySelector(".btn-carrito .badge");
+    const badge = document.getElementById("carrito-contador");
     if (badge) badge.textContent = calcularCantidadTotalItems();
   }
 
   function renderizarListaCarrito() {
     const contenedor = document.getElementById("carrito-lista");
     const mensajeVacio = document.getElementById("carrito-vacio");
-    if (!contenedor) return; // el offcanvas todavía no fue creado
 
     contenedor.innerHTML = "";
 
     if (carrito.length === 0) {
-      mensajeVacio.classList.remove("d-none");
+      mensajeVacio.classList.remove("hidden");
     } else {
-      mensajeVacio.classList.add("d-none");
+      mensajeVacio.classList.add("hidden");
 
       carrito.forEach((item) => {
         const subtotalItem = calcularSubtotalItem(item);
-        const etiquetaPromo = item.promo === "2x1" ? '<span class="badge bg-warning text-dark ms-2">2x1</span>' : "";
+        const etiquetaPromo = item.promo === "2x1" ? `<span class="${CLASES.etiquetaPromo}">2x1</span>` : "";
 
         const fila = document.createElement("div");
-        fila.className = "d-flex justify-content-between align-items-center border-bottom py-2";
+        fila.className = "flex items-center justify-between gap-3 border-b border-[#e4e7eb] py-3";
         fila.innerHTML = `
-          <div>
-            <p class="mb-0 fw-semibold">${item.nombre}${etiquetaPromo}</p>
-            <small class="text-muted">${formatearPrecio(item.precio)} c/u</small>
-            <div class="d-flex align-items-center gap-2 mt-1">
-              <button class="btn btn-sm btn-outline-secondary" data-accion="restar" data-id="${item.id}">−</button>
-              <span>${item.cantidad}</span>
-              <button class="btn btn-sm btn-outline-secondary" data-accion="sumar" data-id="${item.id}">+</button>
+          <div class="min-w-0">
+            <p class="font-semibold leading-snug">${item.nombre}${etiquetaPromo}</p>
+            <small class="text-[#5b6572]">${formatearPrecio(item.precio)} c/u</small>
+            <div class="mt-1 flex items-center gap-2">
+              <button type="button" class="${CLASES.botonCantidad}" data-accion="restar" data-id="${item.id}" aria-label="Quitar una unidad">−</button>
+              <span class="min-w-[1.5rem] text-center">${item.cantidad}</span>
+              <button type="button" class="${CLASES.botonCantidad}" data-accion="sumar" data-id="${item.id}" aria-label="Agregar una unidad">+</button>
             </div>
           </div>
-          <div class="text-end">
-            <p class="fw-bold mb-1">${formatearPrecio(subtotalItem)}</p>
-            <button class="btn btn-sm btn-outline-danger" data-accion="eliminar" data-id="${item.id}">🗑️</button>
+          <div class="text-right">
+            <p class="mb-1 font-bold">${formatearPrecio(subtotalItem)}</p>
+            <button type="button" class="${CLASES.botonEliminar}" data-accion="eliminar" data-id="${item.id}" aria-label="Eliminar ${item.nombre} del carrito">🗑️</button>
           </div>
         `;
         contenedor.appendChild(fila);
@@ -354,11 +341,42 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   /* ============================================================
+     5.5 BOTÓN "AGREGAR AL CARRITO" (uno por producto)
+     ------------------------------------------------------------
+     Un único listener delegado atiende TODAS las tarjetas: las
+     del flyer (escritas en el HTML) y las generadas por categoría.
+     Cada tarjeta es un [data-producto] que trae sus datos en
+     atributos data-*, y su botón lleva el atributo data-agregar.
+     Agregar un producto es SIEMPRE una acción explícita de la
+     persona: ningún otro botón del sitio toca el carrito.
+     ============================================================ */
+  function inicializarBotonesAgregar() {
+    document.addEventListener("click", (evento) => {
+      const boton = evento.target.closest("[data-agregar]");
+      if (!boton) return;
+
+      const tarjeta = boton.closest("[data-producto]");
+      if (!tarjeta) return;
+
+      const producto = {
+        id: tarjeta.dataset.id,
+        nombre: tarjeta.dataset.nombreCarrito || tarjeta.dataset.nombre,
+        precio: Number(tarjeta.dataset.precio),
+      };
+
+      // Los productos con data-promo="2x1" suman de a 1 unidad; el carrito aplica el 2x1 por pares
+      agregarAlCarrito(producto, 1, tarjeta.dataset.promo || null);
+      abrirCarrito();
+    });
+  }
+
+  /* ============================================================
      6. CATÁLOGO POR CATEGORÍAS ("Ver productos")
      ------------------------------------------------------------
      Al hacer clic en el botón de una categoría, se genera
-     dinámicamente una sección con al menos 5 productos de esa
-     categoría y se agrega debajo de "Categorías".
+     dinámicamente una sección con los productos de esa categoría
+     y se agrega debajo de "Categorías". Solo muestra productos y
+     hace scroll: no agrega nada al carrito.
      ============================================================ */
 
   // Crea (una sola vez) el contenedor donde se muestran los productos de la categoría elegida
@@ -368,51 +386,55 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!contenedor) {
       contenedor = document.createElement("section");
       contenedor.id = "resultados-categoria";
-      contenedor.className = "container py-5";
+      contenedor.className = "scroll-mt-4 px-4 py-10";
       document.getElementById("categorias").insertAdjacentElement("afterend", contenedor);
     }
 
     return contenedor;
   }
 
-  function mostrarProductosDeCategoria(nombreCategoriaVisible) {
-    const clave = mapaNombreCategoria[nombreCategoriaVisible];
+  // Arma una tarjeta de producto con la misma estética que las del flyer
+  function crearTarjetaProducto(producto, nombreCategoria) {
+    const columna = document.createElement("div");
+    columna.setAttribute("data-producto", "");
+    columna.dataset.id = producto.id;
+    columna.dataset.nombre = producto.nombre;
+    columna.dataset.precio = producto.precio;
+
+    columna.innerHTML = `
+      <article class="${CLASES.tarjeta}">
+        <img src="${producto.imagen}" alt="${producto.nombre}" class="${CLASES.imagenProducto}">
+        <div class="flex flex-1 flex-col p-4">
+          <p class="${CLASES.categoriaProducto}">${nombreCategoria}</p>
+          <h3 class="${CLASES.tituloProducto}">${producto.nombre}</h3>
+          <p class="${CLASES.precioProducto}">${formatearPrecio(producto.precio)}</p>
+          <button type="button" data-agregar class="${CLASES.botonAgregar}">🛒 Agregar al carrito</button>
+        </div>
+      </article>
+    `;
+
+    activarPlaceholderSiFalla(columna.querySelector("img"));
+    return columna;
+  }
+
+  function mostrarProductosDeCategoria(clave, nombreCategoriaVisible) {
     const productos = catalogoPorCategoria[clave];
     if (!productos) return;
 
     const contenedor = obtenerContenedorCategoria();
 
     contenedor.innerHTML = `
-      <div class="d-flex justify-content-between align-items-center mb-4">
-        <h2 class="fw-bold mb-0">Productos: ${nombreCategoriaVisible}</h2>
-        <button class="btn btn-sm btn-outline-secondary" id="btn-cerrar-categoria">✖ Cerrar</button>
+      <div class="relative mx-auto max-w-7xl overflow-hidden rounded-3xl bg-[linear-gradient(165deg,#2e7d32_0%,#2e7d32_40%,#81c784_100%)] p-6 shadow-[0_20px_45px_rgba(46,125,50,0.35)] sm:p-8">
+        <div class="mb-6 flex flex-wrap items-center justify-between gap-3">
+          <h2 class="text-2xl font-extrabold text-white sm:text-3xl">Productos: ${nombreCategoriaVisible}</h2>
+          <button type="button" id="btn-cerrar-categoria" class="rounded-lg border-2 border-white/70 px-4 py-1.5 text-sm font-bold text-white transition hover:bg-white/20">✖ Cerrar</button>
+        </div>
+        <div id="grid-productos-categoria" class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4"></div>
       </div>
-      <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-4 g-4" id="grid-productos-categoria"></div>
     `;
 
     const grid = document.getElementById("grid-productos-categoria");
-
-    productos.forEach((producto) => {
-      const columna = document.createElement("div");
-      columna.className = "col";
-      columna.innerHTML = `
-        <article class="card product-card h-100 shadow-sm">
-          <img src="${producto.imagen}" class="producto-img" alt="${producto.nombre}">
-          <div class="card-body d-flex flex-column">
-            <p class="text-muted small mb-1">${nombreCategoriaVisible}</p>
-            <h3 class="h5 producto-titulo">${producto.nombre}</h3>
-            <p class="fs-4 fw-bold mb-3">${formatearPrecio(producto.precio)}</p>
-            <button class="btn btn-success mt-auto btn-agregar-carrito">🛒 Agregar al carrito</button>
-          </div>
-        </article>
-      `;
-      columna.querySelector(".btn-agregar-carrito").addEventListener("click", () => {
-        agregarAlCarrito(producto);
-        abrirCarrito();
-      });
-      activarPlaceholderSiFalla(columna.querySelector(".producto-img"));
-      grid.appendChild(columna);
-    });
+    productos.forEach((producto) => grid.appendChild(crearTarjetaProducto(producto, nombreCategoriaVisible)));
 
     document.getElementById("btn-cerrar-categoria").addEventListener("click", () => {
       contenedor.remove();
@@ -422,75 +444,80 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function inicializarBotonesCategorias() {
-    document.querySelectorAll(".categoria-card").forEach((tarjeta) => {
-      const boton = tarjeta.querySelector("button");
-      const nombreCategoria = tarjeta.querySelector("h3").textContent.trim();
-
-      boton.addEventListener("click", () => mostrarProductosDeCategoria(nombreCategoria));
+    document.querySelectorAll("[data-ver-categoria]").forEach((boton) => {
+      boton.addEventListener("click", () =>
+        mostrarProductosDeCategoria(boton.dataset.verCategoria, boton.dataset.nombreCategoria)
+      );
     });
   }
 
   /* ============================================================
-     7. PRODUCTOS ESTÁTICOS (Productos destacados)
+     7. FILTROS Y BÚSQUEDA DEL CATÁLOGO
      ------------------------------------------------------------
-     Lee cada tarjeta ya presente en el HTML y le asigna al botón
-     "Agregar al carrito" el producto correspondiente, extrayendo
-     nombre y precio directamente del DOM.
+     Un solo estado ({ termino, etiqueta }) decide qué tarjetas se
+     ven. Las tarjetas del flyer respetan ambos criterios (texto y
+     etiqueta: todos / oferta / 2x1 / fresco); las de una categoría
+     desplegada solo filtran por texto.
      ============================================================ */
-  function inicializarProductosDestacados() {
-    document.querySelectorAll("#productos .product-card").forEach((tarjeta, indice) => {
-      const nombre = tarjeta.querySelector(".producto-titulo").textContent.trim();
-      const precioTexto = tarjeta.querySelector(".fs-4.fw-bold").textContent.trim();
-      const precio = textoAPrecio(precioTexto);
-      const boton = tarjeta.querySelector("button");
+  const estadoFiltros = { termino: "", etiqueta: "todos" };
 
-      const producto = {
-        id: "destacado-" + indice,
-        nombre: nombre,
-        precio: precio,
-      };
+  function aplicarFiltros() {
+    const termino = normalizarTexto(estadoFiltros.termino.trim());
+    let visiblesDestacados = 0;
+    let visiblesCategoria = 0;
 
-      boton.addEventListener("click", () => {
-        agregarAlCarrito(producto);
-        abrirCarrito();
-      });
+    document.querySelectorAll("[data-producto]").forEach((tarjeta) => {
+      const esDestacado = tarjeta.closest("#productos") !== null;
+      const tags = (tarjeta.dataset.tags || "").split(" ");
+
+      const coincideTexto = termino === "" || normalizarTexto(tarjeta.dataset.nombre).includes(termino);
+      const coincideEtiqueta = !esDestacado || estadoFiltros.etiqueta === "todos" || tags.includes(estadoFiltros.etiqueta);
+      const visible = coincideTexto && coincideEtiqueta;
+
+      tarjeta.classList.toggle("hidden", !visible);
+      if (visible) {
+        if (esDestacado) visiblesDestacados++;
+        else visiblesCategoria++;
+      }
     });
+
+    // Botón de filtro activo (aria-pressed, que Tailwind usa para pintarlo de amarillo)
+    document.querySelectorAll("[data-filtro]").forEach((chip) => {
+      chip.setAttribute("aria-pressed", String(chip.dataset.filtro === estadoFiltros.etiqueta));
+    });
+
+    // Mensaje cuando el flyer queda sin productos
+    document.getElementById("sin-resultados").classList.toggle("hidden", visiblesDestacados > 0);
+
+    return { visiblesDestacados, visiblesCategoria };
   }
 
-  /* ============================================================
-     8. BÚSQUEDA DE PRODUCTOS
-     ------------------------------------------------------------
-     Filtra las tarjetas de "Productos destacados" (y las de una
-     categoría desplegada, si hay alguna abierta) según el texto
-     ingresado, y hace scroll hasta el catálogo.
-     ============================================================ */
-  function buscarProductos(texto) {
-    const termino = normalizarTexto(texto.trim());
-
-    // Tarjetas a filtrar: destacados + categoría desplegada (si existe)
-    const tarjetas = document.querySelectorAll("#productos .product-card, #resultados-categoria .product-card");
-
-    let algunaVisible = false;
-
-    tarjetas.forEach((tarjeta) => {
-      const nombre = normalizarTexto(tarjeta.querySelector(".producto-titulo").textContent);
-      const columna = tarjeta.closest(".col");
-      const coincide = termino === "" || nombre.includes(termino);
-
-      columna.classList.toggle("d-none", !coincide);
-      if (coincide) algunaVisible = true;
-    });
-
+  // Muestra el catálogo con un filtro aplicado y hace scroll suave hasta él.
+  // No agrega nada al carrito ni muestra alertas.
+  function mostrarCatalogo(etiqueta) {
+    estadoFiltros.etiqueta = etiqueta;
+    estadoFiltros.termino = "";
+    document.getElementById("input-busqueda").value = "";
+    aplicarFiltros();
     document.getElementById("productos").scrollIntoView({ behavior: "smooth", block: "start" });
+  }
 
-    if (!algunaVisible && termino !== "") {
-      alert(`No se encontraron productos que coincidan con "${texto}".`);
-    }
+  function buscarProductos(texto) {
+    estadoFiltros.termino = texto;
+    estadoFiltros.etiqueta = "todos"; // una búsqueda siempre parte de "todos"
+    const { visiblesDestacados, visiblesCategoria } = aplicarFiltros();
+
+    // Si no hay coincidencias en el flyer pero sí en la categoría abierta, se lleva a la persona hasta ahí
+    const destino =
+      visiblesDestacados === 0 && visiblesCategoria > 0
+        ? document.getElementById("resultados-categoria")
+        : document.getElementById("productos");
+    destino.scrollIntoView({ behavior: "smooth", block: "start" });
   }
 
   function inicializarBuscador() {
-    const input = document.querySelector('input[type="search"]');
-    const boton = input.closest(".input-group").querySelector("button");
+    const input = document.getElementById("input-busqueda");
+    const boton = document.getElementById("btn-buscar");
 
     boton.addEventListener("click", () => buscarProductos(input.value));
 
@@ -502,46 +529,101 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  /* ============================================================
-     9. OFERTAS Y PROMOCIONES
-     ============================================================ */
-  function inicializarOfertas() {
-    const seccionOfertas = document.getElementById("ofertas");
-
-    // 🔥 Oferta especial: agrega un combo de productos con descuento
-    const botonOfertaEspecial = seccionOfertas.querySelector(".alert-danger button");
-    botonOfertaEspecial.addEventListener("click", () => {
-      const productosOferta = [
-        { id: "oferta-esp-01", nombre: "Aceite de Girasol 1.5 L (Oferta)", precio: 1800 },
-        { id: "oferta-esp-02", nombre: "Yerba Mate 1 kg (Oferta)", precio: 2700 },
-      ];
-      productosOferta.forEach((producto) => agregarAlCarrito(producto));
-      abrirCarrito();
-      alert("🔥 ¡Se agregaron los productos en oferta especial a tu carrito!");
-    });
-
-    // 🛒 2x1: agrega el producto de la promo con cantidad 2 y flag "2x1"
-    const botonDosPorUno = seccionOfertas.querySelector(".alert-warning button");
-    botonDosPorUno.addEventListener("click", () => {
-      const productoDosPorUno = { id: "promo-2x1-gaseosa", nombre: "Gaseosa 2.25 L (2x1)", precio: 2000 };
-      agregarAlCarrito(productoDosPorUno, 2, "2x1");
-      abrirCarrito();
-      alert("🛒 ¡Promoción 2x1 aplicada! Pagás solo una unidad.");
-    });
-
-    // 🚚 Envío gratis: lleva al catálogo y recuerda el monto mínimo
-    const botonEnvioGratis = seccionOfertas.querySelector(".alert-success button");
-    botonEnvioGratis.addEventListener("click", () => {
-      document.getElementById("productos").scrollIntoView({ behavior: "smooth", block: "start" });
-      alert("🚚 Comprá $15.000 o más y el envío es gratis. ¡Seguí agregando productos!");
+  function inicializarFiltros() {
+    document.querySelectorAll("[data-filtro]").forEach((chip) => {
+      chip.addEventListener("click", () => {
+        estadoFiltros.etiqueta = chip.dataset.filtro;
+        estadoFiltros.termino = "";
+        document.getElementById("input-busqueda").value = "";
+        aplicarFiltros();
+      });
     });
   }
 
   /* ============================================================
-     10. NAVBAR - Botón "Carrito"
+     8. OFERTAS Y PROMOCIONES
+     ------------------------------------------------------------
+     Los botones de "Ofertas de la semana" ("Ver oferta",
+     "Ver productos" y "Comprar ahora") ya NO agregan productos al
+     carrito ni muestran alertas: llevan con scroll suave hasta el
+     catálogo y aplican el filtro que indica su atributo
+     data-ir-catalogo. Cada persona elige qué agregar con el botón
+     individual de cada tarjeta.
      ============================================================ */
-  function inicializarBotonCarritoNavbar() {
-    document.querySelector(".btn-carrito").addEventListener("click", abrirCarrito);
+  function inicializarOfertas() {
+    document.querySelectorAll("[data-ir-catalogo]").forEach((boton) => {
+      boton.addEventListener("click", () => mostrarCatalogo(boton.dataset.irCatalogo));
+    });
+  }
+
+  /* ============================================================
+     9. NAVBAR - Menú móvil y botón "Carrito"
+     ============================================================ */
+  function inicializarNavbar() {
+    const botonMenu = document.getElementById("btn-menu");
+    const menu = document.getElementById("menuPrincipal");
+
+    // En celulares el menú se despliega/oculta. En pantallas grandes se ve siempre (clase lg:flex del HTML).
+    function alternarMenu(abrir) {
+      menu.classList.toggle("flex", abrir);
+      menu.classList.toggle("hidden", !abrir);
+      botonMenu.setAttribute("aria-expanded", String(abrir));
+    }
+
+    botonMenu.addEventListener("click", () => alternarMenu(botonMenu.getAttribute("aria-expanded") !== "true"));
+    menu.querySelectorAll("a").forEach((enlace) => enlace.addEventListener("click", () => alternarMenu(false)));
+
+    document.getElementById("btn-carrito").addEventListener("click", abrirCarrito);
+  }
+
+  /* ============================================================
+     10. CARRUSEL DE OFERTAS
+     ------------------------------------------------------------
+     Reemplaza al carrusel de Bootstrap: cambia de imagen con un
+     fundido (opacity), con flechas, indicadores y avance
+     automático que se pausa al pasar el mouse o enfocar.
+     ============================================================ */
+  function inicializarCarrusel() {
+    const carrusel = document.getElementById("carrusel");
+    if (!carrusel) return;
+
+    const slides = [...carrusel.querySelectorAll("[data-slide]")];
+    const puntos = [...carrusel.querySelectorAll("[data-punto]")];
+    let actual = 0;
+    let temporizador = null;
+
+    function mostrar(indice) {
+      actual = (indice + slides.length) % slides.length;
+
+      slides.forEach((slide, i) => {
+        slide.classList.toggle("opacity-100", i === actual);
+        slide.classList.toggle("opacity-0", i !== actual);
+        slide.setAttribute("aria-hidden", String(i !== actual));
+      });
+      puntos.forEach((punto, i) => punto.setAttribute("aria-current", String(i === actual)));
+    }
+
+    function iniciarAutoavance() {
+      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return; // respeta la preferencia del sistema
+      detenerAutoavance();
+      temporizador = setInterval(() => mostrar(actual + 1), 5000);
+    }
+
+    function detenerAutoavance() {
+      clearInterval(temporizador);
+    }
+
+    carrusel.querySelector("[data-carrusel-prev]").addEventListener("click", () => mostrar(actual - 1));
+    carrusel.querySelector("[data-carrusel-next]").addEventListener("click", () => mostrar(actual + 1));
+    puntos.forEach((punto, i) => punto.addEventListener("click", () => mostrar(i)));
+
+    carrusel.addEventListener("mouseenter", detenerAutoavance);
+    carrusel.addEventListener("mouseleave", iniciarAutoavance);
+    carrusel.addEventListener("focusin", detenerAutoavance);
+    carrusel.addEventListener("focusout", iniciarAutoavance);
+
+    mostrar(0);
+    iniciarAutoavance();
   }
 
   /* ============================================================
@@ -605,10 +687,44 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   /* ============================================================
-     12. MODAL "ENVÍOS A DOMICILIO" - SIMULADOR DE CÓDIGO POSTAL
+     12. MODALES (<dialog> nativo)
      ------------------------------------------------------------
-     El modal se abre solo (data-bs-toggle en index.html); acá solo
-     se resuelve la consulta del código postal ingresado.
+     Reemplazan a los modales de Bootstrap. Cualquier elemento con
+     data-abrir-modal="idDelModal" abre su <dialog> con showModal()
+     (que ya trae fondo oscuro, foco atrapado y cierre con Escape).
+     Se cierran con la X (data-cerrar-modal) o haciendo clic afuera.
+     Como son <button> reales, también se abren con Enter/Espacio
+     sin código extra.
+     ============================================================ */
+  function inicializarModales() {
+    document.querySelectorAll("[data-abrir-modal]").forEach((disparador) => {
+      disparador.addEventListener("click", (evento) => {
+        evento.preventDefault();
+        const modal = document.getElementById(disparador.dataset.abrirModal);
+        if (!modal) return;
+        modal.showModal();
+        document.body.classList.add("overflow-hidden"); // evita que la página de atrás se desplace
+      });
+    });
+
+    document.querySelectorAll("dialog").forEach((modal) => {
+      // Clic en el fondo oscuro (el evento llega al <dialog> mismo, no a su contenido)
+      modal.addEventListener("click", (evento) => {
+        if (evento.target === modal) modal.close();
+      });
+      modal.addEventListener("close", () => document.body.classList.remove("overflow-hidden"));
+    });
+
+    document.querySelectorAll("[data-cerrar-modal]").forEach((boton) => {
+      boton.addEventListener("click", () => boton.closest("dialog").close());
+    });
+  }
+
+  /* ============================================================
+     12.5 MODAL "ENVÍOS A DOMICILIO" - SIMULADOR DE CÓDIGO POSTAL
+     ------------------------------------------------------------
+     El modal se abre solo (data-abrir-modal); acá solo se resuelve
+     la consulta del código postal ingresado.
      ============================================================ */
   function inicializarSimuladorCodigoPostal() {
     const boton = document.getElementById("btn-consultar-cp");
@@ -621,19 +737,23 @@ document.addEventListener("DOMContentLoaded", () => {
       4123: "Envío disponible en Famaillá / Tucumán - Entrega en 24hs.",
     };
 
+    function mostrarResultado(mensaje, clases) {
+      resultado.className = clases;
+      resultado.textContent = mensaje;
+    }
+
     function consultarCodigoPostal() {
       const cp = input.value.trim();
-      resultado.classList.remove("d-none", "alert-success", "alert-warning");
 
       if (cp === "") {
-        resultado.classList.add("alert-warning");
-        resultado.textContent = "Ingresá un código postal para consultar.";
+        mostrarResultado("Ingresá un código postal para consultar.", CLASES.alertaAviso);
       } else if (ZONAS_CON_COBERTURA[cp]) {
-        resultado.classList.add("alert-success");
-        resultado.textContent = "✅ " + ZONAS_CON_COBERTURA[cp];
+        mostrarResultado("✅ " + ZONAS_CON_COBERTURA[cp], CLASES.alertaExito);
       } else {
-        resultado.classList.add("alert-warning");
-        resultado.textContent = "Por ahora no tenemos cobertura confirmada para esa zona. Escribinos por WhatsApp y lo verificamos al instante.";
+        mostrarResultado(
+          "Por ahora no tenemos cobertura confirmada para esa zona. Escribinos por WhatsApp y lo verificamos al instante.",
+          CLASES.alertaAviso
+        );
       }
     }
 
@@ -647,29 +767,10 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   /* ============================================================
-     12.5 ACCESIBILIDAD - Tarjetas de "Nuestros servicios"
-     ------------------------------------------------------------
-     Las tarjetas usan role="button" y data-bs-toggle="modal" para
-     abrir su modal con el mouse. Bootstrap sólo escucha el evento
-     "click", así que acá sumamos Enter/Espacio para que también
-     se puedan abrir navegando con teclado.
-     ============================================================ */
-  function inicializarAccesibilidadServicios() {
-    document.querySelectorAll(".servicio-card").forEach((tarjeta) => {
-      tarjeta.addEventListener("keydown", (evento) => {
-        if (evento.key === "Enter" || evento.key === " ") {
-          evento.preventDefault();
-          tarjeta.click();
-        }
-      });
-    });
-  }
-
-  /* ============================================================
      13. FOOTER - "Atención al cliente"
      ------------------------------------------------------------
      "Medios de pago" y "Envíos" abren sus modales solos vía
-     data-bs-toggle en el HTML; el teléfono, WhatsApp y email ya
+     data-abrir-modal en el HTML; el teléfono, WhatsApp y email ya
      son enlaces reales (tel:, wa.me, mailto:). Solo hace falta
      resolver el link de "Atención al cliente", que lleva a la
      sección de contacto.
@@ -687,17 +788,19 @@ document.addEventListener("DOMContentLoaded", () => {
   /* ============================================================
      14. INICIALIZACIÓN GENERAL
      ============================================================ */
-  crearOffcanvasCarrito();
-  inicializarBotonCarritoNavbar();
+  inicializarPanelCarrito();
+  inicializarNavbar();
+  inicializarCarrusel();
   inicializarBotonesCategorias();
-  inicializarProductosDestacados();
+  inicializarBotonesAgregar();
   inicializarPlaceholdersDeImagen();
   inicializarBuscador();
+  inicializarFiltros();
   inicializarOfertas();
   inicializarFormularioContacto();
+  inicializarModales();
   inicializarSimuladorCodigoPostal();
   inicializarAtencionAlCliente();
-  inicializarAccesibilidadServicios();
 
   // Pinta el carrito con lo que haya quedado guardado de una sesión anterior
   actualizarCarrito();

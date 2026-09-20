@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" class="scroll-smooth">
 
 <head>
     <meta charset="UTF-8">
@@ -13,529 +13,693 @@
 
     <title>Supermercado Micuman</title>
 
-    <!-- Bootstrap 5 -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- ==================================================
+        Tailwind CSS (Play CDN)
+        Todos los estilos del sitio se aplican con clases utilitarias
+        directamente en las etiquetas. Lo único que se configura acá es
+         la tipografía (Poppins) como fuente base.    //"Significa que tu sitio web ahora toma todos sus colores, 
+        bordes, tamaños y diseños directamente de internet (vía CDN) 
+        y los aplica a través de "etiquetas" en el código HTML, sin depender de tu archivo style.css local."//
+    =================================================== -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Poppins', 'ui-sans-serif', 'system-ui', 'Segoe UI', 'Arial', 'sans-serif'],
+                    },
+                },
+            },
+        };
+    </script>
+
+    <!-- Tipografía Poppins -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 
     <!-- Font Awesome (íconos de redes sociales y contacto) -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
-    <!-- CSS propio -->
-    <link rel="stylesheet" href="style.css">
+    <!-- CSS propio: DESVINCULADO por indicación de la cátedra.
+         El archivo style.css se conserva en el repositorio solo para su revisión. -->
+    <!-- <link rel="stylesheet" href="style.css"> -->
 </head>
 
-<body>
+<body class="bg-[#f6f7f9] text-[#2b2f33] antialiased min-[1400px]:text-[1.05rem]">
 
     <!-- ==================================================
          NAVBAR
     =================================================== -->
-    <nav class="navbar navbar-expand-lg navbar-dark">
-        <div class="container-fluid">
-            <a class="navbar-brand fw-bold" href="#">
+    <nav class="bg-[#157347] shadow-[0_3px_10px_rgba(0,0,0,0.2)]">
+        <div class="mx-auto flex max-w-[1600px] flex-wrap items-center justify-between gap-3 px-4 py-3 lg:px-6">
+            <a href="#" class="text-xl font-extrabold text-white sm:text-2xl">
                 🛒 Supermercado Micuman
             </a>
 
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menuPrincipal"
-                aria-controls="menuPrincipal" aria-expanded="false" aria-label="Abrir menú">
-                <span class="navbar-toggler-icon"></span>
+            <button id="btn-menu" type="button" aria-controls="menuPrincipal" aria-expanded="false" aria-label="Abrir menú"
+                class="rounded-lg border border-white/50 px-3 py-2 text-white hover:bg-white/10 lg:hidden">
+                <span class="block text-xl leading-none" aria-hidden="true">☰</span>
             </button>
 
-            <div class="collapse navbar-collapse" id="menuPrincipal">
-                <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
-                    <li class="nav-item">
-                        <a class="nav-link active" href="#">Inicio</a>
+            <div id="menuPrincipal" class="hidden w-full flex-col gap-3 lg:flex lg:w-auto lg:flex-1 lg:flex-row lg:items-center">
+                <ul class="flex flex-col gap-1 lg:flex-1 lg:flex-row lg:justify-center lg:gap-2">
+                    <li>
+                        <a href="#" class="block rounded-lg px-4 py-3 text-center font-bold text-white transition hover:-translate-y-0.5 hover:bg-[#fbc02d] hover:text-[#212529] lg:min-w-[120px]">Inicio</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#categorias">Categorías</a>
+                    <li>
+                        <a href="#categorias" class="block rounded-lg px-4 py-3 text-center font-bold text-white transition hover:-translate-y-0.5 hover:bg-[#fbc02d] hover:text-[#212529] lg:min-w-[120px]">Categorías</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#productos">Productos</a>
+                    <li>
+                        <a href="#productos" class="block rounded-lg px-4 py-3 text-center font-bold text-white transition hover:-translate-y-0.5 hover:bg-[#fbc02d] hover:text-[#212529] lg:min-w-[120px]">Productos</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#ofertas">Ofertas</a>
+                    <li>
+                        <a href="#ofertas" class="block rounded-lg px-4 py-3 text-center font-bold text-white transition hover:-translate-y-0.5 hover:bg-[#fbc02d] hover:text-[#212529] lg:min-w-[120px]">Ofertas</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#contacto">Contacto</a>
+                    <li>
+                        <a href="#contacto" class="block rounded-lg px-4 py-3 text-center font-bold text-white transition hover:-translate-y-0.5 hover:bg-[#fbc02d] hover:text-[#212529] lg:min-w-[120px]">Contacto</a>
                     </li>
                 </ul>
 
-                <button class="btn btn-carrito" type="button">
+                <button id="btn-carrito" type="button"
+                    class="rounded-lg bg-[#fbc02d] px-5 py-3 font-extrabold text-[#212529] transition hover:scale-105 hover:bg-[#ffca05]">
                     🛒 Carrito
-                    <span class="badge">0</span>
+                    <span id="carrito-contador"
+                        class="ml-1 inline-block min-w-[1.5rem] rounded-full bg-[#e2364c] px-2 py-0.5 text-center text-xs font-bold text-white">0</span>
                 </button>
             </div>
         </div>
     </nav>
 
-    <!-- ==================================================
-         CARRUSEL
-    =================================================== -->
-    <div id="carouselSupermercado" class="carousel slide" data-bs-ride="carousel">
+    <main>
 
-        <!-- Indicadores -->
-        <div class="carousel-indicators">
-            <button type="button" data-bs-target="#carouselSupermercado" data-bs-slide-to="0" class="active"
-                aria-current="true" aria-label="Oferta 1"></button>
-            <button type="button" data-bs-target="#carouselSupermercado" data-bs-slide-to="1"
-                aria-label="Oferta 2"></button>
-            <button type="button" data-bs-target="#carouselSupermercado" data-bs-slide-to="2"
-                aria-label="Oferta 3"></button>
-        </div>
+        <!-- ==================================================
+             CARRUSEL (propio, sin Bootstrap)
+        =================================================== -->
+        <section class="mx-auto my-5 max-w-[650px] px-4" aria-label="Ofertas destacadas">
+            <div id="carrusel" aria-roledescription="carrusel"
+                class="relative overflow-hidden rounded-2xl bg-[#e6f2ec] shadow-[0_6px_18px_rgba(0,0,0,0.15)]">
 
-        <!-- Imágenes -->
-        <div class="carousel-inner">
-            <div class="carousel-item active">
-                <img src="img/oferta1.jpg" class="d-block w-100" alt="Oferta especial del supermercado">
-            </div>
-            <div class="carousel-item">
-                <img src="img/oferta2.jpg" class="d-block w-100" alt="Promoción del supermercado">
-            </div>
-            <div class="carousel-item">
-                <img src="img/oferta3.png" class="d-block w-100" alt="Ofertas semanales">
-            </div>
-        </div>
+                <div class="relative h-40 sm:h-[200px]">
+                    <img data-slide src="img/oferta1.jpg" alt="Oferta especial del supermercado"
+                        class="absolute inset-0 h-full w-full object-cover opacity-100 transition-opacity duration-700">
+                    <img data-slide src="img/oferta2.jpg" alt="Promoción del supermercado"
+                        class="absolute inset-0 h-full w-full object-cover opacity-0 transition-opacity duration-700">
+                    <img data-slide src="img/oferta3.png" alt="Ofertas semanales"
+                        class="absolute inset-0 h-full w-full object-cover opacity-0 transition-opacity duration-700">
+                </div>
 
-        <!-- Controles -->
-        <button class="carousel-control-prev" type="button" data-bs-target="#carouselSupermercado" data-bs-slide="prev">
-            <span class="carousel-control-prev-icon"></span>
-            <span class="visually-hidden">Anterior</span>
-        </button>
+                <!-- Controles -->
+                <button type="button" data-carrusel-prev aria-label="Anterior"
+                    class="absolute left-2 top-1/2 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-black/40 text-2xl leading-none text-white hover:bg-black/60">‹</button>
+                <button type="button" data-carrusel-next aria-label="Siguiente"
+                    class="absolute right-2 top-1/2 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-black/40 text-2xl leading-none text-white hover:bg-black/60">›</button>
 
-        <button class="carousel-control-next" type="button" data-bs-target="#carouselSupermercado" data-bs-slide="next">
-            <span class="carousel-control-next-icon"></span>
-            <span class="visually-hidden">Siguiente</span>
-        </button>
-    </div>
-
-    <!-- ==================================================
-         HERO
-    =================================================== -->
-    <header class="container py-5 text-center">
-        <h1 class="display-4 fw-bold">¡Bienvenido a Supermercado Micuman!</h1>
-        <p class="lead">Todo lo que necesitás para tu hogar, en un solo lugar.</p>
-        <a href="#productos" class="btn btn-success btn-lg">🛒 Comprar ahora</a>
-    </header>
-
-    <!-- ==================================================
-         BUSCADOR
-    =================================================== -->
-    <section class="container pb-4">
-        <div class="row justify-content-center">
-            <div class="col-12 col-md-8">
-                <div class="input-group">
-                    <input type="search" class="form-control" placeholder="Buscar productos..." aria-label="Buscar productos">
-                    <button class="btn btn-success" type="button">🔎 Buscar</button>
+                <!-- Indicadores -->
+                <div class="absolute inset-x-0 bottom-2 flex justify-center gap-2">
+                    <button type="button" data-punto aria-label="Ir a la oferta 1" aria-current="true"
+                        class="h-3 w-3 rounded-full bg-white/50 aria-[current=true]:bg-white"></button>
+                    <button type="button" data-punto aria-label="Ir a la oferta 2" aria-current="false"
+                        class="h-3 w-3 rounded-full bg-white/50 aria-[current=true]:bg-white"></button>
+                    <button type="button" data-punto aria-label="Ir a la oferta 3" aria-current="false"
+                        class="h-3 w-3 rounded-full bg-white/50 aria-[current=true]:bg-white"></button>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- ==================================================
-         CATEGORÍAS
-    =================================================== -->
-    <section id="categorias" class="container py-5">
-        <div class="text-center mb-5">
-            <h2 class="fw-bold">Categorías</h2>
-            <p class="text-muted">Encontrá todo lo que necesitás.</p>
-        </div>
+        <!-- ==================================================
+             HERO
+        =================================================== -->
+        <header class="mx-auto max-w-5xl px-4 py-10 text-center">
+            <h1 class="text-4xl font-extrabold text-[#0b2338] sm:text-5xl">¡Bienvenido a Supermercado Micuman!</h1>
+            <p class="mt-3 text-lg text-[#5b6572] sm:text-xl">Todo lo que necesitás para tu hogar, en un solo lugar.</p>
+            <a href="#productos"
+                class="mt-6 inline-block rounded-xl bg-[#2e7d32] px-8 py-3 text-lg font-bold text-white shadow-[0_6px_14px_rgba(46,125,50,0.35)] transition hover:bg-[#1b5e20]">
+                🛒 Comprar ahora
+            </a>
+        </header>
 
-        <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-4 g-4">
-            <!-- ALMACÉN -->
-            <div class="col">
-                <article class="card categoria-card h-100 shadow-sm">
-                    <img src="img/almacen/almacen.jfif" class="img-fluid categoria-img" alt="Productos de almacén">
-                    <div class="card-body text-center">
-                        <h3 class="h5 fw-bold">Almacén</h3>
-                        <p class="text-muted">Arroz, fideos, conservas y más.</p>
-                        <button class="btn btn-outline-success">Ver productos</button>
+        <!-- ==================================================
+             BUSCADOR
+        =================================================== -->
+        <section class="mx-auto max-w-5xl px-4 pb-4">
+            <div class="mx-auto flex max-w-2xl overflow-hidden rounded-xl border border-[#e4e7eb] bg-white shadow-[0_2px_8px_rgba(0,0,0,0.06)] focus-within:border-[#2e7d32] focus-within:ring-2 focus-within:ring-[#81c784]">
+                <input id="input-busqueda" type="search" placeholder="Buscar productos..." aria-label="Buscar productos"
+                    class="min-w-0 flex-1 bg-transparent px-4 py-3 focus:outline-none">
+                <button id="btn-buscar" type="button" class="bg-[#2e7d32] px-5 font-bold text-white transition hover:bg-[#1b5e20]">🔎 Buscar</button>
+            </div>
+        </section>
+
+        <!-- ==================================================
+             CATEGORÍAS
+        =================================================== -->
+        <section id="categorias" class="mx-auto max-w-7xl px-4 py-10">
+            <div class="mb-10 text-center">
+                <h2 class="text-3xl font-bold">Categorías</h2>
+                <p class="mt-1 text-[#5b6572]">Encontrá todo lo que necesitás.</p>
+            </div>
+
+            <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
+                <!-- ALMACÉN -->
+                <article class="flex h-full flex-col overflow-hidden rounded-xl border border-[#e4e7eb] bg-white shadow-[0_2px_8px_rgba(0,0,0,0.06)] transition duration-200 hover:-translate-y-1 hover:shadow-[0_10px_20px_rgba(0,0,0,0.12)]">
+                    <img src="img/almacen/almacen.jfif" alt="Productos de almacén" data-fallback
+                        class="h-[180px] w-full object-cover min-[1400px]:h-[220px]">
+                    <div class="flex flex-1 flex-col p-5 text-center">
+                        <h3 class="text-xl font-bold">Almacén</h3>
+                        <p class="mb-4 mt-1 text-[#5b6572]">Arroz, fideos, conservas y más.</p>
+                        <button type="button" data-ver-categoria="almacen" data-nombre-categoria="Almacén"
+                            class="mt-auto rounded-lg border-2 border-[#2e7d32] px-4 py-2 font-semibold text-[#2e7d32] transition hover:bg-[#2e7d32] hover:text-white">Ver productos</button>
+                    </div>
+                </article>
+
+                <!-- LÁCTEOS -->
+                <article class="flex h-full flex-col overflow-hidden rounded-xl border border-[#e4e7eb] bg-white shadow-[0_2px_8px_rgba(0,0,0,0.06)] transition duration-200 hover:-translate-y-1 hover:shadow-[0_10px_20px_rgba(0,0,0,0.12)]">
+                    <img src="img/lacteos/lacteos.jpg" alt="Productos lácteos" data-fallback
+                        class="h-[180px] w-full object-cover min-[1400px]:h-[220px]">
+                    <div class="flex flex-1 flex-col p-5 text-center">
+                        <h3 class="text-xl font-bold">Lácteos</h3>
+                        <p class="mb-4 mt-1 text-[#5b6572]">Leche, yogures, quesos y más.</p>
+                        <button type="button" data-ver-categoria="lacteos" data-nombre-categoria="Lácteos"
+                            class="mt-auto rounded-lg border-2 border-[#2e7d32] px-4 py-2 font-semibold text-[#2e7d32] transition hover:bg-[#2e7d32] hover:text-white">Ver productos</button>
+                    </div>
+                </article>
+
+                <!-- FRUTAS Y VERDURAS -->
+                <article class="flex h-full flex-col overflow-hidden rounded-xl border border-[#e4e7eb] bg-white shadow-[0_2px_8px_rgba(0,0,0,0.06)] transition duration-200 hover:-translate-y-1 hover:shadow-[0_10px_20px_rgba(0,0,0,0.12)]">
+                    <img src="img/frutas y verduras/frutas y verduras.jpg" alt="Frutas y verduras" data-fallback
+                        class="h-[180px] w-full object-cover min-[1400px]:h-[220px]">
+                    <div class="flex flex-1 flex-col p-5 text-center">
+                        <h3 class="text-xl font-bold">Frutas y Verduras</h3>
+                        <p class="mb-4 mt-1 text-[#5b6572]">Productos frescos todos los días.</p>
+                        <button type="button" data-ver-categoria="frutas" data-nombre-categoria="Frutas y Verduras"
+                            class="mt-auto rounded-lg border-2 border-[#2e7d32] px-4 py-2 font-semibold text-[#2e7d32] transition hover:bg-[#2e7d32] hover:text-white">Ver productos</button>
+                    </div>
+                </article>
+
+                <!-- BEBIDAS -->
+                <article class="flex h-full flex-col overflow-hidden rounded-xl border border-[#e4e7eb] bg-white shadow-[0_2px_8px_rgba(0,0,0,0.06)] transition duration-200 hover:-translate-y-1 hover:shadow-[0_10px_20px_rgba(0,0,0,0.12)]">
+                    <img src="img/bebidas/gaseosas varias.jpg" alt="Bebidas" data-fallback
+                        class="h-[180px] w-full object-cover min-[1400px]:h-[220px]">
+                    <div class="flex flex-1 flex-col p-5 text-center">
+                        <h3 class="text-xl font-bold">Bebidas</h3>
+                        <p class="mb-4 mt-1 text-[#5b6572]">Gaseosas, aguas y jugos.</p>
+                        <button type="button" data-ver-categoria="bebidas" data-nombre-categoria="Bebidas"
+                            class="mt-auto rounded-lg border-2 border-[#2e7d32] px-4 py-2 font-semibold text-[#2e7d32] transition hover:bg-[#2e7d32] hover:text-white">Ver productos</button>
                     </div>
                 </article>
             </div>
+        </section>
 
-            <!-- LÁCTEOS -->
-            <div class="col">
-                <article class="card categoria-card h-100 shadow-sm">
-                    <img src="img/lacteos/lacteos.jpg" class="img-fluid categoria-img" alt="Productos lácteos">
-                    <div class="card-body text-center">
-                        <h3 class="h5 fw-bold">Lácteos</h3>
-                        <p class="text-muted">Leche, yogures, quesos y más.</p>
-                        <button class="btn btn-outline-success">Ver productos</button>
-                    </div>
-                </article>
+        <!-- ==================================================
+             ENVÍO
+        =================================================== -->
+        <section class="mx-auto max-w-7xl px-4 pb-4">
+            <div class="rounded-xl border border-[#a5d6a7] bg-[#e8f5e9] px-4 py-3 text-center text-[#1b5e20]" role="alert">
+                🚚 <strong>Envío gratis</strong> en compras superiores a $15.000.
             </div>
+        </section>
 
-            <!-- FRUTAS Y VERDURAS -->
-            <div class="col">
-                <article class="card categoria-card h-100 shadow-sm">
-                    <img src="img/frutas y verduras/frutas y verduras.jpg" class="img-fluid categoria-img" alt="Frutas y verduras">
-                    <div class="card-body text-center">
-                        <h3 class="h5 fw-bold">Frutas y Verduras</h3>
-                        <p class="text-muted">Productos frescos todos los días.</p>
-                        <button class="btn btn-outline-success">Ver productos</button>
-                    </div>
-                </article>
-            </div>
+        <!-- ==================================================
+             PRODUCTOS DESTACADOS — FLYER PROMOCIONAL
+             ------------------------------------------------
+             Fondo verde con degradé y decoración 100% CSS
+             (sin imágenes). Cada tarjeta es un [data-producto]
+             con sus datos en atributos data-*, que lee script.js:
+               data-id            → identificador único en el carrito
+               data-nombre        → nombre (búsqueda y carrito)
+               data-nombre-carrito→ (opcional) nombre distinto para el carrito
+               data-precio        → precio numérico
+               data-tags          → etiquetas para los filtros
+               data-promo         → (opcional) "2x1"
+        =================================================== -->
+        <section id="productos" class="scroll-mt-4 px-4 py-10">
+            <div class="relative mx-auto max-w-7xl overflow-hidden rounded-3xl bg-[linear-gradient(165deg,#2e7d32_0%,#2e7d32_40%,#81c784_100%)] shadow-[0_20px_45px_rgba(46,125,50,0.35)]">
 
-            <!-- BEBIDAS -->
-            <div class="col">
-                <article class="card categoria-card h-100 shadow-sm">
-                    <img src="img/bebidas/gaseosas varias.jpg" class="img-fluid categoria-img" alt="Bebidas">
-                    <div class="card-body text-center">
-                        <h3 class="h5 fw-bold">Bebidas</h3>
-                        <p class="text-muted">Gaseosas, aguas y jugos.</p>
-                        <button class="btn btn-outline-success">Ver productos</button>
-                    </div>
-                </article>
-            </div>
-        </div>
-    </section>
+                <!-- Decoración del flyer (solo CSS): rayos y dos círculos difusos.
+                     Van dentro de su propia capa con overflow-hidden para que los círculos,
+                     que sobresalen del borde, no generen desplazamiento horizontal en el flyer. -->
+                <div aria-hidden="true" class="pointer-events-none absolute inset-0 overflow-hidden">
+                    <div class="absolute inset-0 bg-[repeating-conic-gradient(from_0deg_at_50%_0%,rgba(255,255,255,0.07)_0deg_8deg,transparent_8deg_16deg)]"></div>
+                    <div class="absolute -left-16 -top-16 h-56 w-56 rounded-full bg-white/20 blur-2xl"></div>
+                    <div class="absolute -bottom-20 -right-16 h-64 w-64 rounded-full bg-white/25 blur-2xl"></div>
+                </div>
 
-    <!-- ==================================================
-         ENVÍO
-    =================================================== -->
-    <section class="container pb-4">
-        <div class="alert alert-success text-center" role="alert">
-            🚚 <strong>Envío gratis</strong> en compras superiores a $15.000.
-        </div>
-    </section>
+                <div class="relative px-4 pb-10 pt-10 sm:px-8 lg:px-10">
 
-    <!-- ==================================================
-         PRODUCTOS
-    =================================================== -->
-    <section id="productos" class="container py-5">
-        <div class="d-flex justify-content-between align-items-center mb-4">
-            <div>
-                <h2 class="fw-bold mb-1">Productos destacados</h2>
-                <p class="text-muted mb-0">Los productos más elegidos.</p>
-            </div>
-            <button class="btn btn-outline-primary">Ver todos</button>
-        </div>
+                    <!-- Banner promocional -->
+                    <div class="text-center text-white">
+                        <p class="inline-block -rotate-2 rounded-full bg-[#fbc02d] px-5 py-1.5 text-xs font-extrabold uppercase tracking-[0.25em] text-[#1b5e20] shadow-[0_4px_10px_rgba(0,0,0,0.25)] sm:text-sm">
+                            Productos destacados
+                        </p>
+                        <h2 class="mt-4 text-5xl font-black uppercase leading-none tracking-wide drop-shadow-[0_4px_0_rgba(0,0,0,0.25)] sm:text-7xl">
+                            Special Promo
+                        </h2>
+                        <p class="mt-3 text-2xl font-bold sm:text-4xl">Descuentos hasta 50%</p>
+                        <div class="mx-auto mt-4 h-1.5 w-28 rounded-full bg-[#fbc02d]"></div>
+                    </div>
 
-        <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-4 g-4">
-            <!-- PRODUCTO 1 -->
-            <div class="col">
-                <article class="card product-card h-100 shadow-sm">
-                    <div class="position-relative">
-                        <img src="img/almacen/arroz.jfif" class="producto-img" alt="Arroz Largo Fino 1 kg">
-                        <span class="badge bg-danger position-absolute top-0 start-0 m-2">OFERTA</span>
+                    <!-- Filtros -->
+                    <div class="mt-8 flex flex-wrap justify-center gap-2" role="group" aria-label="Filtrar productos">
+                        <button type="button" data-filtro="todos" aria-pressed="true"
+                            class="rounded-full border-2 border-white/70 bg-white/10 px-5 py-2 text-sm font-bold text-white transition hover:bg-white/25 aria-pressed:border-[#fbc02d] aria-pressed:bg-[#fbc02d] aria-pressed:text-[#1b5e20]">Todos</button>
+                        <button type="button" data-filtro="oferta" aria-pressed="false"
+                            class="rounded-full border-2 border-white/70 bg-white/10 px-5 py-2 text-sm font-bold text-white transition hover:bg-white/25 aria-pressed:border-[#fbc02d] aria-pressed:bg-[#fbc02d] aria-pressed:text-[#1b5e20]">🔥 Ofertas</button>
+                        <button type="button" data-filtro="2x1" aria-pressed="false"
+                            class="rounded-full border-2 border-white/70 bg-white/10 px-5 py-2 text-sm font-bold text-white transition hover:bg-white/25 aria-pressed:border-[#fbc02d] aria-pressed:bg-[#fbc02d] aria-pressed:text-[#1b5e20]">🛒 2x1</button>
+                        <button type="button" data-filtro="fresco" aria-pressed="false"
+                            class="rounded-full border-2 border-white/70 bg-white/10 px-5 py-2 text-sm font-bold text-white transition hover:bg-white/25 aria-pressed:border-[#fbc02d] aria-pressed:bg-[#fbc02d] aria-pressed:text-[#1b5e20]">🌿 Frescos</button>
                     </div>
-                    <div class="card-body d-flex flex-column">
-                        <h3 class="h5 producto-titulo">Arroz Largo Fino 1 kg</h3>
-                        <p class="text-decoration-line-through text-muted mb-0">$2.000</p>
-                        <p class="fs-4 fw-bold mb-3">$1.500</p>
-                        <button class="btn btn-success mt-auto">🛒 Agregar al carrito</button>
-                    </div>
-                </article>
-            </div>
 
-            <!-- PRODUCTO 2 -->
-            <div class="col">
-                <article class="card product-card h-100 shadow-sm">
-                    <div class="position-relative">
-                        <img src="img/lacteos/leche.jfif" class="producto-img" alt="Leche Entera 1 L">
-                        <span class="badge bg-danger position-absolute top-0 start-0 m-2">-15%</span>
-                    </div>
-                    <div class="card-body d-flex flex-column">
-                        <h3 class="h5 producto-titulo">Leche Entera 1 L</h3>
-                        <p class="text-decoration-line-through text-muted mb-0">$1.400</p>
-                        <p class="fs-4 fw-bold mb-3">$1.190</p>
-                        <button class="btn btn-success mt-auto">🛒 Agregar al carrito</button>
-                    </div>
-                </article>
-            </div>
+                    <!-- Tarjetas -->
+                    <div class="mt-8 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
 
-            <!-- PRODUCTO 3 -->
-            <div class="col">
-                <article class="card product-card h-100 shadow-sm">
-                    <div class="position-relative">
-                        <img src="img/bebidas/gaseosa.jfif" class="producto-img" alt="Gaseosa 2.25 L">
-                        <span class="badge bg-danger position-absolute top-0 start-0 m-2">2x1</span>
-                    </div>
-                    <div class="card-body d-flex flex-column">
-                        <p class="text-muted small mb-1">Bebidas</p>
-                        <h3 class="h5 producto-titulo">Gaseosa 2.25 L</h3>
-                        <p class="text-decoration-line-through text-muted mb-0">$2.500</p>
-                        <p class="fs-4 fw-bold mb-3">$2.000</p>
-                        <button class="btn btn-success mt-auto">🛒 Agregar al carrito</button>
-                    </div>
-                </article>
-            </div>
+                        <!-- PRODUCTO 1: Arroz -->
+                        <div data-producto data-id="alm-01" data-nombre="Arroz Largo Fino 1 kg" data-precio="1500" data-tags="oferta">
+                            <article class="relative flex h-full flex-col overflow-hidden rounded-2xl border border-white/70 bg-white shadow-[0_6px_18px_rgba(0,0,0,0.18)] transition duration-200 hover:-translate-y-1 hover:shadow-[0_14px_28px_rgba(0,0,0,0.28)]">
+                                <span class="absolute left-0 top-4 z-10 bg-[#fbc02d] py-1.5 pl-3 pr-8 text-sm font-extrabold uppercase tracking-wide text-[#1b5e20] [clip-path:polygon(0_0,100%_0,88%_50%,100%_100%,0_100%)]">25% OFF</span>
+                                <img src="img/almacen/arroz.jfif" alt="Arroz Largo Fino 1 kg" data-fallback
+                                    class="h-44 w-full bg-[#f1f8f2] object-contain p-3 min-[1400px]:h-[260px]">
+                                <div class="flex flex-1 flex-col p-4">
+                                    <p class="text-xs font-semibold uppercase tracking-wide text-[#5b6572]">Almacén</p>
+                                    <h3 class="mt-1 min-h-[3.5rem] text-lg font-bold leading-snug text-[#2e7d32]">Arroz Largo Fino 1 kg</h3>
+                                    <p class="text-sm text-[#5b6572] line-through">$2.000</p>
+                                    <p class="mb-4 text-3xl font-extrabold text-[#d32f2f]">$1.500</p>
+                                    <button type="button" data-agregar
+                                        class="mt-auto rounded-xl bg-[#2e7d32] px-4 py-2.5 font-bold text-white transition hover:bg-[#1b5e20] active:scale-95">🛒 Agregar al carrito</button>
+                                </div>
+                            </article>
+                        </div>
 
-            <!-- PRODUCTO 4 -->
-            <div class="col">
-                <article class="card product-card h-100 shadow-sm">
-                    <div class="position-relative">
-                        <img src="img/frutas y verduras/manzana.jfif" class="producto-img" alt="Manzana Roja 1 kg">
-                        <span class="badge bg-success position-absolute top-0 start-0 m-2">FRESCO</span>
-                    </div>
-                    <div class="card-body d-flex flex-column">
-                        <p class="text-muted small mb-1">Frutas</p>
-                        <h3 class="h5 producto-titulo">Manzana Roja 1 kg</h3>
-                        <p class="text-muted mb-0">Precio por kilogramo</p>
-                        <p class="fs-4 fw-bold mb-3">$1.800</p>
-                        <button class="btn btn-success mt-auto">🛒 Agregar al carrito</button>
-                    </div>
-                </article>
-            </div>
-        </div>
-    </section>
+                        <!-- PRODUCTO 2: Leche -->
+                        <div data-producto data-id="lac-01" data-nombre="Leche Entera 1 L" data-precio="1190" data-tags="oferta">
+                            <article class="relative flex h-full flex-col overflow-hidden rounded-2xl border border-white/70 bg-white shadow-[0_6px_18px_rgba(0,0,0,0.18)] transition duration-200 hover:-translate-y-1 hover:shadow-[0_14px_28px_rgba(0,0,0,0.28)]">
+                                <span class="absolute left-0 top-4 z-10 bg-[#fbc02d] py-1.5 pl-3 pr-8 text-sm font-extrabold uppercase tracking-wide text-[#1b5e20] [clip-path:polygon(0_0,100%_0,88%_50%,100%_100%,0_100%)]">15% OFF</span>
+                                <img src="img/lacteos/leche.jfif" alt="Leche Entera 1 L" data-fallback
+                                    class="h-44 w-full bg-[#f1f8f2] object-contain p-3 min-[1400px]:h-[260px]">
+                                <div class="flex flex-1 flex-col p-4">
+                                    <p class="text-xs font-semibold uppercase tracking-wide text-[#5b6572]">Lácteos</p>
+                                    <h3 class="mt-1 min-h-[3.5rem] text-lg font-bold leading-snug text-[#2e7d32]">Leche Entera 1 L</h3>
+                                    <p class="text-sm text-[#5b6572] line-through">$1.400</p>
+                                    <p class="mb-4 text-3xl font-extrabold text-[#d32f2f]">$1.190</p>
+                                    <button type="button" data-agregar
+                                        class="mt-auto rounded-xl bg-[#2e7d32] px-4 py-2.5 font-bold text-white transition hover:bg-[#1b5e20] active:scale-95">🛒 Agregar al carrito</button>
+                                </div>
+                            </article>
+                        </div>
 
-    <!-- ==================================================
-         OFERTAS
-    =================================================== -->
-    <section id="ofertas" class="container py-5">
-        <div class="text-center mb-5">
-            <h2 class="fw-bold">Ofertas de la semana</h2>
-            <p class="text-muted">Aprovechá nuestras promociones.</p>
-        </div>
+                        <!-- PRODUCTO 3: Gaseosa (2x1) -->
+                        <div data-producto data-id="beb-01-2x1" data-nombre="Gaseosa 2.25 L" data-precio="2000" data-tags="2x1" data-promo="2x1">
+                            <article class="relative flex h-full flex-col overflow-hidden rounded-2xl border border-white/70 bg-white shadow-[0_6px_18px_rgba(0,0,0,0.18)] transition duration-200 hover:-translate-y-1 hover:shadow-[0_14px_28px_rgba(0,0,0,0.28)]">
+                                <span class="absolute left-0 top-4 z-10 bg-[#fbc02d] py-1.5 pl-3 pr-8 text-sm font-extrabold uppercase tracking-wide text-[#1b5e20] [clip-path:polygon(0_0,100%_0,88%_50%,100%_100%,0_100%)]">2x1</span>
+                                <img src="img/bebidas/gaseosa.jfif" alt="Gaseosa 2.25 L" data-fallback
+                                    class="h-44 w-full bg-[#f1f8f2] object-contain p-3 min-[1400px]:h-[260px]">
+                                <div class="flex flex-1 flex-col p-4">
+                                    <p class="text-xs font-semibold uppercase tracking-wide text-[#5b6572]">Bebidas</p>
+                                    <h3 class="mt-1 min-h-[3.5rem] text-lg font-bold leading-snug text-[#2e7d32]">Gaseosa 2.25 L</h3>
+                                    <p class="text-sm font-semibold text-[#1b5e20]">Llevá 2 y pagás 1</p>
+                                    <p class="mb-4 text-3xl font-extrabold text-[#d32f2f]">$2.000</p>
+                                    <button type="button" data-agregar
+                                        class="mt-auto rounded-xl bg-[#2e7d32] px-4 py-2.5 font-bold text-white transition hover:bg-[#1b5e20] active:scale-95">🛒 Agregar al carrito</button>
+                                </div>
+                            </article>
+                        </div>
 
-        <div class="row g-4">
-            <div class="col-12 col-md-4">
-                <div class="alert alert-danger h-100 text-center">
-                    <h3 class="h4 fw-bold">🔥 Oferta especial</h3>
-                    <p>Descuentos en productos seleccionados.</p>
-                    <button class="btn btn-danger">Ver oferta</button>
+                        <!-- PRODUCTO 4: Fideos (2x1) -->
+                        <div data-producto data-id="alm-02-2x1" data-nombre="Fideos Tallarín 500 g" data-precio="900" data-tags="2x1" data-promo="2x1">
+                            <article class="relative flex h-full flex-col overflow-hidden rounded-2xl border border-white/70 bg-white shadow-[0_6px_18px_rgba(0,0,0,0.18)] transition duration-200 hover:-translate-y-1 hover:shadow-[0_14px_28px_rgba(0,0,0,0.28)]">
+                                <span class="absolute left-0 top-4 z-10 bg-[#fbc02d] py-1.5 pl-3 pr-8 text-sm font-extrabold uppercase tracking-wide text-[#1b5e20] [clip-path:polygon(0_0,100%_0,88%_50%,100%_100%,0_100%)]">2x1</span>
+                                <img src="img/almacen/fideos.jfif" alt="Fideos Tallarín 500 g" data-fallback
+                                    class="h-44 w-full bg-[#f1f8f2] object-contain p-3 min-[1400px]:h-[260px]">
+                                <div class="flex flex-1 flex-col p-4">
+                                    <p class="text-xs font-semibold uppercase tracking-wide text-[#5b6572]">Almacén</p>
+                                    <h3 class="mt-1 min-h-[3.5rem] text-lg font-bold leading-snug text-[#2e7d32]">Fideos Tallarín 500 g</h3>
+                                    <p class="text-sm font-semibold text-[#1b5e20]">Llevá 2 y pagás 1</p>
+                                    <p class="mb-4 text-3xl font-extrabold text-[#d32f2f]">$900</p>
+                                    <button type="button" data-agregar
+                                        class="mt-auto rounded-xl bg-[#2e7d32] px-4 py-2.5 font-bold text-white transition hover:bg-[#1b5e20] active:scale-95">🛒 Agregar al carrito</button>
+                                </div>
+                            </article>
+                        </div>
+
+                        <!-- PRODUCTO 5: Aceite (oferta) -->
+                        <div data-producto data-id="alm-03-oferta" data-nombre="Aceite de Girasol 1.5 L" data-nombre-carrito="Aceite de Girasol 1.5 L (Oferta)" data-precio="1800" data-tags="oferta">
+                            <article class="relative flex h-full flex-col overflow-hidden rounded-2xl border border-white/70 bg-white shadow-[0_6px_18px_rgba(0,0,0,0.18)] transition duration-200 hover:-translate-y-1 hover:shadow-[0_14px_28px_rgba(0,0,0,0.28)]">
+                                <span class="absolute left-0 top-4 z-10 bg-[#fbc02d] py-1.5 pl-3 pr-8 text-sm font-extrabold uppercase tracking-wide text-[#1b5e20] [clip-path:polygon(0_0,100%_0,88%_50%,100%_100%,0_100%)]">18% OFF</span>
+                                <img src="img/almacen/aceite.jfif" alt="Aceite de Girasol 1.5 L" data-fallback
+                                    class="h-44 w-full bg-[#f1f8f2] object-contain p-3 min-[1400px]:h-[260px]">
+                                <div class="flex flex-1 flex-col p-4">
+                                    <p class="text-xs font-semibold uppercase tracking-wide text-[#5b6572]">Almacén</p>
+                                    <h3 class="mt-1 min-h-[3.5rem] text-lg font-bold leading-snug text-[#2e7d32]">Aceite de Girasol 1.5 L</h3>
+                                    <p class="text-sm text-[#5b6572] line-through">$2.200</p>
+                                    <p class="mb-4 text-3xl font-extrabold text-[#d32f2f]">$1.800</p>
+                                    <button type="button" data-agregar
+                                        class="mt-auto rounded-xl bg-[#2e7d32] px-4 py-2.5 font-bold text-white transition hover:bg-[#1b5e20] active:scale-95">🛒 Agregar al carrito</button>
+                                </div>
+                            </article>
+                        </div>
+
+                        <!-- PRODUCTO 6: Yerba (oferta) -->
+                        <div data-producto data-id="alm-06-oferta" data-nombre="Yerba Mate 1 kg" data-nombre-carrito="Yerba Mate 1 kg (Oferta)" data-precio="2700" data-tags="oferta">
+                            <article class="relative flex h-full flex-col overflow-hidden rounded-2xl border border-white/70 bg-white shadow-[0_6px_18px_rgba(0,0,0,0.18)] transition duration-200 hover:-translate-y-1 hover:shadow-[0_14px_28px_rgba(0,0,0,0.28)]">
+                                <span class="absolute left-0 top-4 z-10 bg-[#fbc02d] py-1.5 pl-3 pr-8 text-sm font-extrabold uppercase tracking-wide text-[#1b5e20] [clip-path:polygon(0_0,100%_0,88%_50%,100%_100%,0_100%)]">16% OFF</span>
+                                <img src="img/almacen/yerba.jfif" alt="Yerba Mate 1 kg" data-fallback
+                                    class="h-44 w-full bg-[#f1f8f2] object-contain p-3 min-[1400px]:h-[260px]">
+                                <div class="flex flex-1 flex-col p-4">
+                                    <p class="text-xs font-semibold uppercase tracking-wide text-[#5b6572]">Almacén</p>
+                                    <h3 class="mt-1 min-h-[3.5rem] text-lg font-bold leading-snug text-[#2e7d32]">Yerba Mate 1 kg</h3>
+                                    <p class="text-sm text-[#5b6572] line-through">$3.200</p>
+                                    <p class="mb-4 text-3xl font-extrabold text-[#d32f2f]">$2.700</p>
+                                    <button type="button" data-agregar
+                                        class="mt-auto rounded-xl bg-[#2e7d32] px-4 py-2.5 font-bold text-white transition hover:bg-[#1b5e20] active:scale-95">🛒 Agregar al carrito</button>
+                                </div>
+                            </article>
+                        </div>
+
+                        <!-- PRODUCTO 7: Manzana (fresco) -->
+                        <div data-producto data-id="fru-01" data-nombre="Manzana Roja 1 kg" data-precio="1800" data-tags="fresco">
+                            <article class="relative flex h-full flex-col overflow-hidden rounded-2xl border border-white/70 bg-white shadow-[0_6px_18px_rgba(0,0,0,0.18)] transition duration-200 hover:-translate-y-1 hover:shadow-[0_14px_28px_rgba(0,0,0,0.28)]">
+                                <span class="absolute left-0 top-4 z-10 bg-[#2e7d32] py-1.5 pl-3 pr-8 text-sm font-extrabold uppercase tracking-wide text-white [clip-path:polygon(0_0,100%_0,88%_50%,100%_100%,0_100%)]">Fresco</span>
+                                <img src="img/frutas y verduras/manzana.jfif" alt="Manzana Roja 1 kg" data-fallback
+                                    class="h-44 w-full bg-[#f1f8f2] object-contain p-3 min-[1400px]:h-[260px]">
+                                <div class="flex flex-1 flex-col p-4">
+                                    <p class="text-xs font-semibold uppercase tracking-wide text-[#5b6572]">Frutas</p>
+                                    <h3 class="mt-1 min-h-[3.5rem] text-lg font-bold leading-snug text-[#2e7d32]">Manzana Roja 1 kg</h3>
+                                    <p class="text-sm text-[#5b6572]">Precio por kilogramo</p>
+                                    <p class="mb-4 text-3xl font-extrabold text-[#d32f2f]">$1.800</p>
+                                    <button type="button" data-agregar
+                                        class="mt-auto rounded-xl bg-[#2e7d32] px-4 py-2.5 font-bold text-white transition hover:bg-[#1b5e20] active:scale-95">🛒 Agregar al carrito</button>
+                                </div>
+                            </article>
+                        </div>
+
+                        <!-- PRODUCTO 8: Banana (fresco) -->
+                        <div data-producto data-id="fru-02" data-nombre="Banana 1 kg" data-precio="1200" data-tags="fresco">
+                            <article class="relative flex h-full flex-col overflow-hidden rounded-2xl border border-white/70 bg-white shadow-[0_6px_18px_rgba(0,0,0,0.18)] transition duration-200 hover:-translate-y-1 hover:shadow-[0_14px_28px_rgba(0,0,0,0.28)]">
+                                <span class="absolute left-0 top-4 z-10 bg-[#2e7d32] py-1.5 pl-3 pr-8 text-sm font-extrabold uppercase tracking-wide text-white [clip-path:polygon(0_0,100%_0,88%_50%,100%_100%,0_100%)]">Fresco</span>
+                                <img src="img/frutas y verduras/banana.jfif" alt="Banana 1 kg" data-fallback
+                                    class="h-44 w-full bg-[#f1f8f2] object-contain p-3 min-[1400px]:h-[260px]">
+                                <div class="flex flex-1 flex-col p-4">
+                                    <p class="text-xs font-semibold uppercase tracking-wide text-[#5b6572]">Frutas</p>
+                                    <h3 class="mt-1 min-h-[3.5rem] text-lg font-bold leading-snug text-[#2e7d32]">Banana 1 kg</h3>
+                                    <p class="text-sm text-[#5b6572]">Precio por kilogramo</p>
+                                    <p class="mb-4 text-3xl font-extrabold text-[#d32f2f]">$1.200</p>
+                                    <button type="button" data-agregar
+                                        class="mt-auto rounded-xl bg-[#2e7d32] px-4 py-2.5 font-bold text-white transition hover:bg-[#1b5e20] active:scale-95">🛒 Agregar al carrito</button>
+                                </div>
+                            </article>
+                        </div>
+                    </div>
+
+                    <!-- Mensaje cuando el filtro o la búsqueda no devuelven productos -->
+                    <p id="sin-resultados" role="status"
+                        class="mt-8 hidden rounded-xl bg-white px-4 py-3 text-center font-semibold text-[#1b5e20]">
+                        No se encontraron productos destacados para esta selección.
+                    </p>
                 </div>
             </div>
+        </section>
 
-            <div class="col-12 col-md-4">
-                <div class="alert alert-warning h-100 text-center">
-                    <h3 class="h4 fw-bold">🛒 2x1</h3>
-                    <p>Llevá dos productos seleccionados por el precio de uno.</p>
-                    <button class="btn btn-warning">Ver productos</button>
-                </div>
+        <!-- ==================================================
+             OFERTAS
+             Estos botones NO agregan nada al carrito: llevan al
+             catálogo (flyer) y aplican el filtro correspondiente.
+        =================================================== -->
+        <section id="ofertas" class="mx-auto max-w-7xl scroll-mt-4 px-4 py-10">
+            <div class="mb-10 text-center">
+                <h2 class="text-3xl font-bold">Ofertas de la semana</h2>
+                <p class="mt-1 text-[#5b6572]">Aprovechá nuestras promociones.</p>
             </div>
 
-            <div class="col-12 col-md-4">
-                <div class="alert alert-success h-100 text-center">
-                    <h3 class="h4 fw-bold">🚚 Envío gratis</h3>
-                    <p>En compras superiores a $15.000.</p>
-                    <button class="btn btn-success">Comprar ahora</button>
+            <div class="grid gap-6 md:grid-cols-3">
+                <div class="flex flex-col rounded-2xl border-2 border-[#ef9a9a] bg-[#ffebee] p-6 text-center text-[#7f1d1d]">
+                    <h3 class="text-2xl font-bold">🔥 Oferta especial</h3>
+                    <p class="my-3">Descuentos en productos seleccionados.</p>
+                    <button type="button" data-ir-catalogo="oferta"
+                        class="mt-auto rounded-xl bg-[#d32f2f] px-5 py-2.5 font-bold text-white transition hover:bg-[#b71c1c]">Ver oferta</button>
+                </div>
+
+                <div class="flex flex-col rounded-2xl border-2 border-[#fbc02d] bg-[#fff8e1] p-6 text-center text-[#5f4300]">
+                    <h3 class="text-2xl font-bold">🛒 2x1</h3>
+                    <p class="my-3">Llevá dos productos seleccionados por el precio de uno.</p>
+                    <button type="button" data-ir-catalogo="2x1"
+                        class="mt-auto rounded-xl bg-[#fbc02d] px-5 py-2.5 font-bold text-[#1b1b1b] transition hover:bg-[#f9a825]">Ver productos</button>
+                </div>
+
+                <div class="flex flex-col rounded-2xl border-2 border-[#81c784] bg-[#e8f5e9] p-6 text-center text-[#1b5e20]">
+                    <h3 class="text-2xl font-bold">🚚 Envío gratis</h3>
+                    <p class="my-3">En compras superiores a $15.000.</p>
+                    <button type="button" data-ir-catalogo="todos"
+                        class="mt-auto rounded-xl bg-[#2e7d32] px-5 py-2.5 font-bold text-white transition hover:bg-[#1b5e20]">Comprar ahora</button>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- ==================================================
-         SERVICIOS
-    =================================================== -->
-    <section class="container py-5">
-        <div class="text-center mb-5">
-            <h2 class="fw-bold">Nuestros servicios</h2>
-        </div>
-
-        <div class="row g-4 text-center">
-            <div class="col-12 col-md-4">
-                <div class="card servicio-card h-100 shadow-sm" role="button" tabindex="0"
-                    data-bs-toggle="modal" data-bs-target="#modalEnvios">
-                    <div class="card-body">
-                        <div class="display-5">🚚</div>
-                        <h3 class="h5 fw-bold mt-3">Envíos a domicilio</h3>
-                        <p class="text-muted mb-1">Recibí tus compras en la puerta de tu casa.</p>
-                        <span class="badge text-bg-light border">Consultar cobertura</span>
-                    </div>
-                </div>
+        <!-- ==================================================
+             SERVICIOS
+        =================================================== -->
+        <section class="mx-auto max-w-7xl px-4 py-10">
+            <div class="mb-10 text-center">
+                <h2 class="text-3xl font-bold">Nuestros servicios</h2>
             </div>
 
-            <div class="col-12 col-md-4">
-                <div class="card servicio-card h-100 shadow-sm" role="button" tabindex="0"
-                    data-bs-toggle="modal" data-bs-target="#modalPagos">
-                    <div class="card-body">
-                        <div class="display-5">💳</div>
-                        <h3 class="h5 fw-bold mt-3">Múltiples medios de pago</h3>
-                        <p class="text-muted mb-1">Pagá como prefieras.</p>
-                        <span class="badge text-bg-light border">Ver medios de pago</span>
-                    </div>
+            <div class="grid gap-6 text-center md:grid-cols-3">
+                <button type="button" data-abrir-modal="modalEnvios"
+                    class="flex h-full w-full flex-col items-center rounded-xl border border-[#e4e7eb] bg-white p-6 shadow-[0_2px_8px_rgba(0,0,0,0.06)] transition duration-200 hover:-translate-y-1 hover:shadow-[0_10px_20px_rgba(0,0,0,0.12)] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-[#81c784]">
+                    <span class="text-5xl" aria-hidden="true">🚚</span>
+                    <span class="mt-3 text-xl font-bold">Envíos a domicilio</span>
+                    <span class="mb-2 mt-1 text-[#5b6572]">Recibí tus compras en la puerta de tu casa.</span>
+                    <span class="mt-auto rounded-full border border-[#e4e7eb] bg-[#f6f7f9] px-3 py-1 text-xs font-semibold">Consultar cobertura</span>
+                </button>
+
+                <button type="button" data-abrir-modal="modalPagos"
+                    class="flex h-full w-full flex-col items-center rounded-xl border border-[#e4e7eb] bg-white p-6 shadow-[0_2px_8px_rgba(0,0,0,0.06)] transition duration-200 hover:-translate-y-1 hover:shadow-[0_10px_20px_rgba(0,0,0,0.12)] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-[#81c784]">
+                    <span class="text-5xl" aria-hidden="true">💳</span>
+                    <span class="mt-3 text-xl font-bold">Múltiples medios de pago</span>
+                    <span class="mb-2 mt-1 text-[#5b6572]">Pagá como prefieras.</span>
+                    <span class="mt-auto rounded-full border border-[#e4e7eb] bg-[#f6f7f9] px-3 py-1 text-xs font-semibold">Ver medios de pago</span>
+                </button>
+
+                <button type="button" data-abrir-modal="modalCalidad"
+                    class="flex h-full w-full flex-col items-center rounded-xl border border-[#e4e7eb] bg-white p-6 shadow-[0_2px_8px_rgba(0,0,0,0.06)] transition duration-200 hover:-translate-y-1 hover:shadow-[0_10px_20px_rgba(0,0,0,0.12)] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-[#81c784]">
+                    <span class="text-5xl" aria-hidden="true">⭐</span>
+                    <span class="mt-3 text-xl font-bold">Calidad garantizada</span>
+                    <span class="mb-2 mt-1 text-[#5b6572]">Productos seleccionados para vos.</span>
+                    <span class="mt-auto rounded-full border border-[#e4e7eb] bg-[#f6f7f9] px-3 py-1 text-xs font-semibold">Política de garantía</span>
+                </button>
+            </div>
+        </section>
+
+        <!-- ==================================================
+             REGISTRO / CONTACTO
+        =================================================== -->
+        <section id="contacto" class="mx-auto max-w-7xl scroll-mt-4 px-4 py-10">
+            <div class="mx-auto max-w-xl">
+                <div class="rounded-xl border border-[#e4e7eb] bg-white p-6 shadow-[0_2px_8px_rgba(0,0,0,0.06)] sm:p-8">
+                    <h2 class="text-center text-3xl font-bold">Contacto y Consultas</h2>
+                    <p class="mb-6 mt-1 text-center text-[#5b6572]">¿Tenés una duda o un pedido especial? Escribinos.</p>
+
+                    <!-- El formulario envía los datos vía JavaScript (fetch) a Formspree,
+                         que reenvía cada consulta a rochagloria24@gmail.com -->
+                    <form id="form-registro" action="https://formspree.io/f/rochagloria24@gmail.com" method="POST">
+                        <div class="mb-4">
+                            <label for="nombre" class="mb-1 block font-medium">Nombre</label>
+                            <input type="text" id="nombre" name="nombre" placeholder="Ingresá tu nombre" required
+                                class="w-full rounded-lg border border-[#cfd6dd] px-3 py-2 focus:border-[#2e7d32] focus:outline-none focus:ring-2 focus:ring-[#81c784]">
+                        </div>
+
+                        <div class="mb-4">
+                            <label for="email" class="mb-1 block font-medium">Email</label>
+                            <input type="email" id="email" name="email" placeholder="ejemplo@email.com" required
+                                class="w-full rounded-lg border border-[#cfd6dd] px-3 py-2 focus:border-[#2e7d32] focus:outline-none focus:ring-2 focus:ring-[#81c784]">
+                        </div>
+
+                        <div class="mb-4">
+                            <label for="telefono" class="mb-1 block font-medium">Teléfono</label>
+                            <input type="tel" id="telefono" name="telefono" placeholder="Ingresá tu teléfono" required
+                                class="w-full rounded-lg border border-[#cfd6dd] px-3 py-2 focus:border-[#2e7d32] focus:outline-none focus:ring-2 focus:ring-[#81c784]">
+                        </div>
+
+                        <div class="mb-4">
+                            <label for="mensaje" class="mb-1 block font-medium">Mensaje</label>
+                            <textarea id="mensaje" name="mensaje" rows="4" placeholder="Escribí tu consulta" required
+                                class="w-full rounded-lg border border-[#cfd6dd] px-3 py-2 focus:border-[#2e7d32] focus:outline-none focus:ring-2 focus:ring-[#81c784]"></textarea>
+                        </div>
+
+                        <button type="submit"
+                            class="w-full rounded-xl bg-[#2e7d32] px-4 py-3 font-bold text-white transition hover:bg-[#1b5e20] disabled:opacity-60">Enviar consulta</button>
+                    </form>
                 </div>
             </div>
+        </section>
 
-            <div class="col-12 col-md-4">
-                <div class="card servicio-card h-100 shadow-sm" role="button" tabindex="0"
-                    data-bs-toggle="modal" data-bs-target="#modalCalidad">
-                    <div class="card-body">
-                        <div class="display-5">⭐</div>
-                        <h3 class="h5 fw-bold mt-3">Calidad garantizada</h3>
-                        <p class="text-muted mb-1">Productos seleccionados para vos.</p>
-                        <span class="badge text-bg-light border">Política de garantía</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- ==================================================
-         MODALES DE SERVICIOS
-    =================================================== -->
-
-    <!-- Modal: Envíos a domicilio (simulador de código postal) -->
-    <div class="modal fade" id="modalEnvios" tabindex="-1" aria-labelledby="modalEnviosLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="modalEnviosLabel">🚚 Envíos a domicilio</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
-                </div>
-                <div class="modal-body">
-                    <p>Ingresá tu código postal para consultar la disponibilidad de envío:</p>
-                    <div class="input-group mb-3">
-                        <input type="text" id="input-cp" class="form-control" placeholder="Ej: 4123" maxlength="8">
-                        <button class="btn btn-success" type="button" id="btn-consultar-cp">Consultar</button>
-                    </div>
-                    <div id="resultado-cp" class="alert d-none" role="alert"></div>
-                    <p class="text-muted small mb-0">Envíos disponibles en Capital y alrededores. Entrega estimada: 24 a 48hs hábiles.</p>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Modal: Medios de pago -->
-    <div class="modal fade" id="modalPagos" tabindex="-1" aria-labelledby="modalPagosLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="modalPagosLabel">💳 Medios de pago</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
-                </div>
-                <div class="modal-body">
-                    <h6 class="fw-bold">Bancos adheridos</h6>
-                    <ul class="mb-3">
-                        <li>Banco Macro</li>
-                        <li>Banco Nación</li>
-                        <li>Banco Galicia</li>
-                        <li>Brubank</li>
-                    </ul>
-                    <h6 class="fw-bold">Tarjetas aceptadas</h6>
-                    <p class="mb-3">Visa, Mastercard y Mercado Pago (débito y crédito).</p>
-                    <h6 class="fw-bold">Promociones</h6>
-                    <p class="mb-0">💳 3 cuotas sin interés con tarjetas de crédito seleccionadas.</p>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Modal: Calidad garantizada -->
-    <div class="modal fade" id="modalCalidad" tabindex="-1" aria-labelledby="modalCalidadLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="modalCalidadLabel">⭐ Calidad garantizada</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
-                </div>
-                <div class="modal-body">
-                    <h6 class="fw-bold">Garantía de frescura</h6>
-                    <p class="mb-3">Seleccionamos nuestros productos frescos (frutas, verduras y lácteos) todos los días. Si un producto no cumple con nuestros estándares de calidad, lo reponemos sin cargo.</p>
-                    <h6 class="fw-bold">Política de devolución</h6>
-                    <p class="mb-0">Contás con 7 días desde la compra para solicitar el cambio o devolución de un producto en mal estado, presentando el comprobante de compra.</p>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- ==================================================
-         REGISTRO
-    =================================================== -->
-    <section id="contacto" class="container py-5">
-        <div class="row justify-content-center">
-            <div class="col-12 col-md-8 col-lg-6">
-                <div class="card shadow-sm">
-                    <div class="card-body p-4">
-                        <h2 class="text-center fw-bold mb-1">Contacto y Consultas</h2>
-                        <p class="text-center text-muted mb-4">¿Tenés una duda o un pedido especial? Escribinos.</p>
-
-                        <!-- El formulario envía los datos vía JavaScript (fetch) a Formspree,
-                             que reenvía cada consulta a rochagloria24@gmail.com -->
-                        <form id="form-registro" action="https://formspree.io/f/rochagloria24@gmail.com" method="POST">
-                            <div class="mb-3">
-                                <label for="nombre" class="form-label">Nombre</label>
-                                <input type="text" id="nombre" name="nombre" class="form-control" placeholder="Ingresá tu nombre" required>
-                            </div>
-
-                            <div class="mb-3">
-                                <label for="email" class="form-label">Email</label>
-                                <input type="email" id="email" name="email" class="form-control" placeholder="ejemplo@email.com" required>
-                            </div>
-
-                            <div class="mb-3">
-                                <label for="telefono" class="form-label">Teléfono</label>
-                                <input type="tel" id="telefono" name="telefono" class="form-control" placeholder="Ingresá tu teléfono" required>
-                            </div>
-
-                            <div class="mb-3">
-                                <label for="mensaje" class="form-label">Mensaje</label>
-                                <textarea id="mensaje" name="mensaje" class="form-control" rows="4" placeholder="Escribí tu consulta" required></textarea>
-                            </div>
-
-                            <button type="submit" class="btn btn-success w-100">Enviar consulta</button>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+    </main>
 
     <!-- ==================================================
          FOOTER
     =================================================== -->
-    <footer>
-        <div class="container">
-            <div class="row g-4">
-                <div class="col-12 col-sm-6 col-lg-3">
-                    <h5 class="fw-bold">🛒 Supermercado Micuman</h5>
-                    <p>Tu supermercado de confianza.</p>
+    <footer class="bg-[#0b2338] py-10 text-white">
+        <div class="mx-auto max-w-7xl px-4">
+            <div class="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
+                <div>
+                    <h5 class="mb-3 text-lg font-bold text-[#fbc02d]">🛒 Supermercado Micuman</h5>
+                    <p class="text-[#cfd8de]">Tu supermercado de confianza.</p>
                 </div>
 
-                <div class="col-12 col-sm-6 col-lg-3">
-                    <h5 class="fw-bold">Información</h5>
-                    <p class="mb-1"><a href="#contacto" id="atencion-cliente">Atención al cliente</a></p>
-                    <p class="mb-1"><a href="#" id="medios-pago" data-bs-toggle="modal" data-bs-target="#modalPagos">Medios de pago</a></p>
-                    <p><a href="#" id="envios" data-bs-toggle="modal" data-bs-target="#modalEnvios">Envíos</a></p>
+                <div>
+                    <h5 class="mb-3 text-lg font-bold text-[#fbc02d]">Información</h5>
+                    <p class="mb-1"><a href="#contacto" id="atencion-cliente" class="text-[#cfd8de] transition hover:text-[#fbc02d]">Atención al cliente</a></p>
+                    <p class="mb-1"><a href="#" id="medios-pago" data-abrir-modal="modalPagos" class="text-[#cfd8de] transition hover:text-[#fbc02d]">Medios de pago</a></p>
+                    <p><a href="#" id="envios" data-abrir-modal="modalEnvios" class="text-[#cfd8de] transition hover:text-[#fbc02d]">Envíos</a></p>
                 </div>
 
-                <div class="col-12 col-sm-6 col-lg-3">
-                    <h5 class="fw-bold">Contacto</h5>
-                    <p class="mb-1">
+                <div>
+                    <h5 class="mb-3 text-lg font-bold text-[#fbc02d]">Contacto</h5>
+                    <p class="mb-1 text-[#cfd8de]">
                         <i class="fa-solid fa-phone"></i>
-                        <a href="tel:+5493814699126">+54 9 381 469-9126</a>
+                        <a href="tel:+5493814699126" class="transition hover:text-[#fbc02d]">+54 9 381 469-9126</a>
                     </p>
-                    <p class="mb-1">
+                    <p class="mb-1 text-[#cfd8de]">
                         <i class="fa-brands fa-whatsapp"></i>
-                        <a href="https://wa.me/5493814699126" target="_blank" rel="noopener">Escribinos por WhatsApp</a>
+                        <a href="https://wa.me/5493814699126" target="_blank" rel="noopener" class="transition hover:text-[#fbc02d]">Escribinos por WhatsApp</a>
                     </p>
-                    <p class="mb-1">
+                    <p class="mb-1 text-[#cfd8de]">
                         <i class="fa-solid fa-envelope"></i>
-                        <a href="mailto:rochagloria24@gmail.com">rochagloria24@gmail.com</a>
+                        <a href="mailto:rochagloria24@gmail.com" class="transition hover:text-[#fbc02d]">rochagloria24@gmail.com</a>
                     </p>
-                    <p><i class="fa-solid fa-location-dot"></i> Tucumán, Argentina</p>
+                    <p class="text-[#cfd8de]"><i class="fa-solid fa-location-dot"></i> Tucumán, Argentina</p>
                 </div>
 
-                <div class="col-12 col-sm-6 col-lg-3">
-                    <h5 class="fw-bold">Síguenos</h5>
-                    <div class="d-flex gap-2 footer-redes">
-                        <a href="https://github.com/rochagloria" target="_blank" rel="noopener" class="footer-red-link" aria-label="GitHub del equipo">
+                <div>
+                    <h5 class="mb-3 text-lg font-bold text-[#fbc02d]">Síguenos</h5>
+                    <div class="mt-1 flex gap-2">
+                        <a href="https://github.com/rochagloria" target="_blank" rel="noopener" aria-label="GitHub del equipo"
+                            class="inline-flex h-[38px] w-[38px] items-center justify-center rounded-full bg-white/10 text-lg transition hover:-translate-y-0.5 hover:bg-[#fbc02d] hover:text-[#0b2338]">
                             <i class="fa-brands fa-github"></i>
                         </a>
-                        <a href="https://facebook.com/supermercadomicuman" target="_blank" rel="noopener" class="footer-red-link" aria-label="Facebook">
+                        <a href="https://facebook.com/supermercadomicuman" target="_blank" rel="noopener" aria-label="Facebook"
+                            class="inline-flex h-[38px] w-[38px] items-center justify-center rounded-full bg-white/10 text-lg transition hover:-translate-y-0.5 hover:bg-[#fbc02d] hover:text-[#0b2338]">
                             <i class="fa-brands fa-facebook-f"></i>
                         </a>
-                        <a href="https://instagram.com/supermercadomicuman" target="_blank" rel="noopener" class="footer-red-link" aria-label="Instagram">
+                        <a href="https://instagram.com/supermercadomicuman" target="_blank" rel="noopener" aria-label="Instagram"
+                            class="inline-flex h-[38px] w-[38px] items-center justify-center rounded-full bg-white/10 text-lg transition hover:-translate-y-0.5 hover:bg-[#fbc02d] hover:text-[#0b2338]">
                             <i class="fa-brands fa-instagram"></i>
                         </a>
                     </div>
                 </div>
             </div>
 
-            <hr>
+            <hr class="my-8 border-white/15">
 
-            <div class="text-center">
-                <p class="mb-0">© 2026 Supermercado Micuman. Todos los derechos reservados.</p>
-            </div>
+            <p class="text-center text-[#cfd8de]">© 2026 Supermercado Micuman. Todos los derechos reservados.</p>
         </div>
     </footer>
 
     <!-- ==================================================
-         BOOTSTRAP JAVASCRIPT
+         MODALES DE SERVICIOS (<dialog> nativo, sin Bootstrap)
+         Se abren con showModal() desde script.js.
     =================================================== -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-<script src="script.js"></script>
+
+    <!-- Modal: Envíos a domicilio (simulador de código postal) -->
+    <dialog id="modalEnvios" aria-labelledby="modalEnviosLabel"
+        class="m-auto w-[calc(100%-2rem)] max-w-lg rounded-2xl bg-white p-0 text-[#2b2f33] shadow-2xl backdrop:bg-black/50">
+        <div>
+            <div class="flex items-center justify-between border-b border-[#e4e7eb] px-5 py-4">
+                <h2 id="modalEnviosLabel" class="text-lg font-bold">🚚 Envíos a domicilio</h2>
+                <button type="button" data-cerrar-modal aria-label="Cerrar"
+                    class="rounded-lg px-2 py-1 text-2xl leading-none text-[#5b6572] hover:bg-gray-100">×</button>
+            </div>
+            <div class="px-5 py-4">
+                <p class="mb-3">Ingresá tu código postal para consultar la disponibilidad de envío:</p>
+                <div class="mb-3 flex overflow-hidden rounded-lg border border-[#cfd6dd] focus-within:border-[#2e7d32] focus-within:ring-2 focus-within:ring-[#81c784]">
+                    <input type="text" id="input-cp" placeholder="Ej: 4123" maxlength="8"
+                        class="min-w-0 flex-1 px-3 py-2 focus:outline-none">
+                    <button type="button" id="btn-consultar-cp"
+                        class="bg-[#2e7d32] px-4 font-semibold text-white transition hover:bg-[#1b5e20]">Consultar</button>
+                </div>
+                <div id="resultado-cp" class="hidden" role="alert"></div>
+                <p class="text-sm text-[#5b6572]">Envíos disponibles en Capital y alrededores. Entrega estimada: 24 a 48hs hábiles.</p>
+            </div>
+        </div>
+    </dialog>
+
+    <!-- Modal: Medios de pago -->
+    <dialog id="modalPagos" aria-labelledby="modalPagosLabel"
+        class="m-auto w-[calc(100%-2rem)] max-w-lg rounded-2xl bg-white p-0 text-[#2b2f33] shadow-2xl backdrop:bg-black/50">
+        <div>
+            <div class="flex items-center justify-between border-b border-[#e4e7eb] px-5 py-4">
+                <h2 id="modalPagosLabel" class="text-lg font-bold">💳 Medios de pago</h2>
+                <button type="button" data-cerrar-modal aria-label="Cerrar"
+                    class="rounded-lg px-2 py-1 text-2xl leading-none text-[#5b6572] hover:bg-gray-100">×</button>
+            </div>
+            <div class="px-5 py-4">
+                <h3 class="font-bold">Bancos adheridos</h3>
+                <ul class="mb-4 mt-1 list-disc pl-6">
+                    <li>Banco Macro</li>
+                    <li>Banco Nación</li>
+                    <li>Banco Galicia</li>
+                    <li>Brubank</li>
+                </ul>
+                <h3 class="font-bold">Tarjetas aceptadas</h3>
+                <p class="mb-4 mt-1">Visa, Mastercard y Mercado Pago (débito y crédito).</p>
+                <h3 class="font-bold">Promociones</h3>
+                <p class="mt-1">💳 3 cuotas sin interés con tarjetas de crédito seleccionadas.</p>
+            </div>
+        </div>
+    </dialog>
+
+    <!-- Modal: Calidad garantizada -->
+    <dialog id="modalCalidad" aria-labelledby="modalCalidadLabel"
+        class="m-auto w-[calc(100%-2rem)] max-w-lg rounded-2xl bg-white p-0 text-[#2b2f33] shadow-2xl backdrop:bg-black/50">
+        <div>
+            <div class="flex items-center justify-between border-b border-[#e4e7eb] px-5 py-4">
+                <h2 id="modalCalidadLabel" class="text-lg font-bold">⭐ Calidad garantizada</h2>
+                <button type="button" data-cerrar-modal aria-label="Cerrar"
+                    class="rounded-lg px-2 py-1 text-2xl leading-none text-[#5b6572] hover:bg-gray-100">×</button>
+            </div>
+            <div class="px-5 py-4">
+                <h3 class="font-bold">Garantía de frescura</h3>
+                <p class="mb-4 mt-1">Seleccionamos nuestros productos frescos (frutas, verduras y lácteos) todos los días. Si un producto no cumple con nuestros estándares de calidad, lo reponemos sin cargo.</p>
+                <h3 class="font-bold">Política de devolución</h3>
+                <p class="mt-1">Contás con 7 días desde la compra para solicitar el cambio o devolución de un producto en mal estado, presentando el comprobante de compra.</p>
+            </div>
+        </div>
+    </dialog>
+
+    <!-- ==================================================
+         PANEL DEL CARRITO (lateral, sin fondo oscuro)
+         Se abre/cierra desde script.js. No bloquea la pantalla:
+         se puede seguir navegando y comprando con el panel abierto.
+    =================================================== -->
+    <aside id="panel-carrito" role="dialog" aria-modal="false" aria-labelledby="panel-carrito-titulo"
+        class="invisible fixed inset-y-0 right-0 z-50 flex w-full translate-x-full flex-col bg-white shadow-[-4px_0_15px_rgba(0,0,0,0.25)] transition-[transform,visibility] duration-300 sm:w-[400px] min-[1400px]:w-[450px]">
+        <div class="flex items-center justify-between border-b border-[#e4e7eb] px-4 py-3">
+            <h2 id="panel-carrito-titulo" class="text-lg font-bold">🛒 Tu carrito</h2>
+            <button type="button" id="btn-cerrar-carrito" aria-label="Cerrar carrito"
+                class="rounded-lg px-2 py-1 text-2xl leading-none text-[#5b6572] hover:bg-gray-100">×</button>
+        </div>
+
+        <div class="flex-1 overflow-y-auto px-4">
+            <div id="carrito-lista"></div>
+            <div id="carrito-vacio" class="hidden py-8 text-center text-[#5b6572]">Tu carrito está vacío.</div>
+        </div>
+
+        <div class="border-t border-[#e4e7eb] p-4">
+            <div class="flex justify-between">
+                <span>Subtotal</span>
+                <span id="carrito-subtotal">$0</span>
+            </div>
+            <p id="carrito-envio-msg" class="mb-2 min-h-[1.25rem] text-sm text-[#157347]"></p>
+            <div class="mb-3 flex justify-between text-xl font-bold">
+                <span>Total</span>
+                <span id="carrito-total">$0</span>
+            </div>
+            <button type="button" id="btn-vaciar-carrito"
+                class="w-full rounded-lg border-2 border-[#d32f2f] px-4 py-2 font-semibold text-[#d32f2f] transition hover:bg-[#d32f2f] hover:text-white">Vaciar carrito</button>
+        </div>
+    </aside>
+
+    <script src="script.js"></script>
 </body>
 
 </html>
