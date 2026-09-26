@@ -149,26 +149,61 @@ body {
  */
  /* ========================================
    NUEVO DISEÑO SUPERMERCADO
+   Paleta corporativa + tipografía profesional
 ======================================== */
+<<<<<<< Updated upstream
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap');
+=======
+```css
+/* ==================================================
+   VARIABLES DE COLORES
+================================================== */
+>>>>>>> Stashed changes
+
 :root {
-    --verde: #18a558;
-    --verde-oscuro: #087f3f;
-    --amarillo: #ffd60a;
-    --rojo: #ef233c;
-    --azul-oscuro: #012a4a;
+    /* Verde corporativo, más sobrio que un verde "neón" */
+    --verde: #157347;
+    --verde-oscuro: #0d5c38;
+    --verde-suave: #e6f2ec;
+
+    /* Acento cálido, menos saturado que un amarillo puro */
+    --amarillo: #f2b705;
+
+    --rojo: #e2364c;
+    --azul-oscuro: #0b2338;
+
     --blanco: #ffffff;
-    --gris-claro: #f5f7fa;
+    --gris-claro: #f6f7f9;
+    --gris-borde: #e4e7eb;
+    --gris-texto: #5b6572;
 }
+
+
+/* ==================================================
+   GENERAL
+================================================== */
 
 body {
     margin: 0;
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: "Poppins", Arial, Helvetica, sans-serif;
     background-color: var(--gris-claro);
+    color: #2b2f33;
 }
 
-/* ========================================
+/* Jerarquía visual: títulos con peso y familia consistentes en toda la web */
+h1, h2, h3, h4, h5 {
+    font-family: "Poppins", Arial, Helvetica, sans-serif;
+    font-weight: 700;
+}
+
+.text-muted {
+    color: var(--gris-texto) !important;
+}
+
+
+/* ==================================================
    BARRA DE NAVEGACIÓN
-======================================== */
+================================================== */
 
 .navbar {
     width: 100%;
@@ -178,12 +213,12 @@ body {
     box-shadow: 0 3px 10px rgba(0, 0, 0, 0.20);
 }
 
-.navbar .container {
-    max-width: 1400px;
+.navbar .container-fluid {
+    width: 100%;
 }
 
 .navbar-brand {
-    color: white !important;
+    color: var(--blanco) !important;
     font-size: 1.5rem;
     font-weight: 800;
     margin-right: 30px;
@@ -198,7 +233,7 @@ body {
 }
 
 .navbar-nav .nav-link {
-    color: white !important;
+    color: var(--blanco) !important;
     font-weight: 700;
     padding: 12px 18px !important;
     border-radius: 8px;
@@ -213,7 +248,10 @@ body {
     transform: translateY(-2px);
 }
 
-/* Carrito */
+
+/* ==================================================
+   BOTÓN CARRITO
+================================================== */
 
 .btn-carrito {
     background-color: var(--amarillo) !important;
@@ -228,29 +266,20 @@ body {
 
 .btn-carrito:hover {
     background-color: #ffca05 !important;
+    color: #212529 !important;
     transform: scale(1.05);
 }
 
 .btn-carrito .badge {
     background-color: var(--rojo) !important;
-    color: white;
+    color: var(--blanco);
     margin-left: 5px;
 }
 
-/* ========================================
-   CATEGORÍAS
-======================================== */
 
-.categoria-img {
-    width: 100%;
-    height: 180px;
-    object-fit: cover;
-    border-radius: 10px;
-}
-
-/* ========================================
+/* ==================================================
    CARRUSEL
-======================================== */
+================================================== */
 
 #carouselSupermercado {
     max-width: 650px;
@@ -263,57 +292,103 @@ body {
     object-fit: cover;
 }
 
-/* ========================================
-   PRODUCTOS DESTACADOS
-======================================== */
 
-/* ========================================
+/* ==================================================
+   CATEGORÍAS
+================================================== */
+
+.categoria-card {
+    border-radius: 12px;
+    overflow: hidden;
+    border: none;
+}
+
+.categoria-img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+}
+
+
+/* ==================================================
    PRODUCTOS DESTACADOS
-======================================== */
+================================================== */
+
+#productos .product-card {
+    height: 100%;
+    border-radius: 12px;
+    overflow: hidden;
+    border: none;
+}
+
+
+/* IMÁGENES DE PRODUCTOS */
 
 #productos .producto-img {
+    display: block;
     width: 100%;
-    height: 220px;
+    height: 170px;
     object-fit: contain;
-    padding: 15px;
+    padding: 12px;
     background-color: #f8f9fa;
 }
 
-/* Todos los títulos ocupan el mismo espacio */
-#productos .card-body h3 {
+
+/* TÍTULOS DE LOS PRODUCTOS */
+
+#productos .producto-titulo {
     min-height: 48px;
+    margin-bottom: 10px;
 }
 
-/* Todas las tarjetas tienen la misma altura */
-#productos .product-card {
-    height: 100%;
-}
 
-/* El botón queda siempre abajo */
+/* CUERPO DE LAS TARJETAS */
+
 #productos .card-body {
     display: flex;
     flex-direction: column;
 }
 
-/* ========================================
+
+/* BOTONES SIEMPRE ABAJO */
+
+#productos .card-body .btn {
+    margin-top: auto;
+}
+
+
+/* EFECTO AL PASAR EL MOUSE */
+
+#productos .product-card {
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+#productos .product-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15) !important;
+}
+
+
+/* ==================================================
    OFERTAS
-======================================== */
+================================================== */
 
 .badge-oferta {
     background-color: var(--rojo);
-    color: white;
+    color: var(--blanco);
     padding: 7px 10px;
     border-radius: 20px;
 }
 
-/* ========================================
+
+/* ==================================================
    BOTÓN COMPRAR
-======================================== */
+================================================== */
 
 .btn-comprar {
     width: 100%;
     background-color: var(--rojo);
-    color: white;
+    color: var(--blanco);
     border: none;
     font-weight: 700;
     padding: 10px;
@@ -322,19 +397,311 @@ body {
 
 .btn-comprar:hover {
     background-color: #c9182b;
-    color: white;
+    color: var(--blanco);
 }
 
-/* ========================================
+
+/* ==================================================
    FOOTER
-======================================== */
+================================================== */
 
 footer {
     background-color: var(--azul-oscuro);
-    color: white;
+    color: var(--blanco);
     padding: 40px 0;
 }
 
 footer h5 {
     color: var(--amarillo);
+<<<<<<< Updated upstream
+    letter-spacing: 0.3px;
+    margin-bottom: 12px;
 }
+
+footer p {
+    color: #cfd8de;
+}
+
+/* Los ítems clickeables del footer (medios de pago, envíos, email) */
+footer p[id] {
+    cursor: pointer;
+    transition: color 0.15s ease;
+}
+
+footer p[id]:hover {
+    color: var(--amarillo);
+}
+
+footer hr {
+    border-color: rgba(255, 255, 255, 0.15);
+    margin: 32px 0 20px;
+}
+
+/* Columna "Síguenos", agregada dinámicamente por script.js */
+.footer-redes {
+    margin-top: 4px;
+}
+
+.footer-red-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.08);
+    text-decoration: none;
+    font-size: 1.1rem;
+    transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.footer-red-link:hover {
+    background: var(--amarillo);
+    transform: translateY(-2px);
+}
+
+/* ========================================
+   TARJETAS - ESTÉTICA Y UNIFORMIDAD
+   (categorías, productos destacados y
+   productos generados dinámicamente)
+======================================== */
+
+.categoria-card,
+.product-card,
+.servicio-card {
+    border-radius: 12px;
+    overflow: hidden; /* redondea también la imagen superior */
+    border: 1px solid var(--gris-borde);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    height: 100%; /* todas las tarjetas de una fila miden lo mismo */
+}
+
+.categoria-card:hover,
+.product-card:hover,
+.servicio-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.12);
+}
+
+/* Las tarjetas de servicios son clickeables (abren un modal) */
+.servicio-card {
+    cursor: pointer;
+}
+
+.servicio-card:focus-visible {
+    outline: 3px solid var(--verde);
+    outline-offset: 2px;
+}
+
+/* El contenido interno se acomoda en columna para poder empujar
+   el botón "Agregar al carrito" / "Ver productos" hasta el fondo */
+.categoria-card .card-body,
+.product-card .card-body {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.categoria-card .card-body button,
+.product-card .card-body button {
+    margin-top: auto;
+    border-radius: 8px;
+}
+
+/* Mismo alto de título en todas las tarjetas, aunque el nombre sea más largo */
+.categoria-card .card-body h3,
+.product-card .producto-titulo {
+    min-height: 48px;
+}
+
+/* ========================================
+   PLACEHOLDERS DE IMAGEN (sin foto real)
+   Se activan automáticamente por JS cuando
+   una imagen no carga, para que las tarjetas
+   nunca se vean "rotas" o vacías mientras no
+   se suben las fotos definitivas.
+======================================== */
+.img-placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, var(--verde-suave), #eef1ef);
+    color: var(--verde-oscuro);
+}
+
+.img-placeholder svg {
+    width: 42%;
+    max-width: 64px;
+    height: auto;
+    opacity: 0.55;
+}
+
+/* ========================================
+   RESPONSIVE - MULTI DISPOSITIVO
+   (celulares, tablets, notebooks, desktop
+   y pantallas grandes / Smart TV)
+======================================== */
+
+/* Panel del carrito (offcanvas): ancho fijo cómodo en pantallas
+   medianas/grandes, pero nunca más ancho que la pantalla */
+.offcanvas-end {
+    width: 400px;
+    max-width: 100%;
+}
+
+/* Como el carrito ahora se abre sin backdrop, el catálogo detrás
+   debe seguir siendo clickeable y scrolleable con normalidad */
+.offcanvas {
+    box-shadow: -4px 0 15px rgba(0, 0, 0, 0.25);
+}
+
+/* ---------- Pantallas grandes / Smart TV (>= 1400px) ---------- */
+@media (min-width: 1400px) {
+    .navbar .container {
+        max-width: 1600px;
+    }
+
+    .categoria-img {
+        height: 220px;
+    }
+
+    #productos .producto-img {
+        height: 260px;
+    }
+
+    body {
+        font-size: 1.05rem;
+    }
+
+    .offcanvas-end {
+        width: 450px;
+    }
+}
+
+/* ---------- Tablets (hasta 991px) ---------- */
+@media (max-width: 991px) {
+    .navbar-nav {
+        justify-content: center;
+        flex-wrap: wrap;
+        row-gap: 6px;
+    }
+
+    .navbar-nav .nav-link {
+        min-width: 110px;
+        padding: 10px 14px !important;
+=======
+}
+
+
+/* ==================================================
+   RESPONSIVE - CELULARES
+================================================== */
+
+@media (max-width: 576px) {
+
+    .navbar {
+        padding: 10px 15px;
+    }
+
+    .navbar-brand {
+        font-size: 1.2rem;
+    }
+
+    .navbar-nav {
+        gap: 2px;
+    }
+
+    .navbar-nav .nav-link {
+        min-width: auto;
+        padding: 10px !important;
+>>>>>>> Stashed changes
+    }
+
+    .btn-carrito {
+        margin-left: 0;
+        margin-top: 10px;
+<<<<<<< Updated upstream
+    }
+
+    #carouselSupermercado {
+        max-width: 100%;
+=======
+        width: 100%;
+    }
+
+    #carouselSupermercado {
+        margin: 15px auto;
+    }
+
+    #carouselSupermercado .carousel-item img {
+        height: 160px;
+>>>>>>> Stashed changes
+    }
+
+    .categoria-img {
+        height: 160px;
+    }
+<<<<<<< Updated upstream
+}
+
+/* ---------- Celulares (hasta 576px) ---------- */
+@media (max-width: 576px) {
+    .navbar-brand {
+        font-size: 1.2rem;
+        margin-right: 0;
+    }
+
+    .navbar-nav .nav-link {
+        width: 100%;
+        min-width: unset;
+    }
+
+    .btn-carrito {
+        width: 100%;
+    }
+
+    .categoria-img {
+        height: 140px;
+    }
+=======
+
+    #productos .producto-img {
+        height: 150px;
+    }
+
+}
+
+
+/* ==================================================
+   RESPONSIVE - TABLETS
+================================================== */
+
+@media (min-width: 577px) and (max-width: 991px) {
+>>>>>>> Stashed changes
+
+    #productos .producto-img {
+        height: 160px;
+    }
+
+    #carouselSupermercado .carousel-item img {
+<<<<<<< Updated upstream
+        height: 150px;
+    }
+
+    /* En celulares el carrito ocupa toda la pantalla para que sea legible */
+    .offcanvas-end {
+        width: 100%;
+    }
+
+    .card-body h3.producto-titulo {
+        font-size: 1rem;
+    }
+}
+=======
+        height: 180px;
+    }
+
+}
+```
+>>>>>>> Stashed changes
